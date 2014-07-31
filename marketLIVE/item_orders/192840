@@ -1,0 +1,493 @@
+  
+  <!doctype html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    
+    <!-- styles used on all pages -->
+    <link href="/staticLIVE/css/style.css" rel="stylesheet" type="text/css" />
+
+    <!-- styles needed by DataTables -->
+    <link href="/staticLIVE/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+    
+    <!-- styles needed by jScrollPane -->
+    <link type="text/css" href="/staticLIVE/css/jquery.jscrollpane.css" rel="stylesheet" media="all" />
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="/staticLIVE/js/jquery-1.6.4.min.js"></script>
+    
+     <!-- the mousewheel plugin - optional to provide mousewheel support -->
+    <script type="text/javascript" src="/staticLIVE/js/jquery.mousewheel.js"></script>
+
+    <!-- the DataTables script -->
+    <script type="text/javascript" src="/staticLIVE/js//datatables/jquery.dataTables.min.js"></script>
+
+    <!-- the jScrollPane script -->
+    <script type="text/javascript" src="/staticLIVE/js/jquery.jscrollpane.min.js"></script>
+    
+    <!-- Globalize (https://github.com/jquery/globalize) -->
+    <script type="text/javascript" src="/staticLIVE/js/globalize/globalize.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/staticLIVE/js/globalize/globalize.cultures.js" charset="utf-8"></script>
+    
+    <!-- Market specific JavaScript -->
+    <script type="text/javascript" src="/staticLIVE/js/market.js"></script>
+    
+    <script type="text/javascript">
+      $(document).ready(function() {
+        if (typeof AnarchyOnline == "undefined") {
+          AnarchyOnline = new Object();
+          AnarchyOnline.AcceptLanguage = [];
+          AnarchyOnline.IsInGame = false;
+        }
+        Globalize.culture(AnarchyOnline.AcceptLanguage);
+      })
+    </script>
+    
+    <link rel="alternate" media="print" href="item_view.html">
+    <title>Item Orders</title>
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        // Set up the datatable.
+        $('#sellOrderTable').dataTable({'aoColumns': [{'sWidth': '20px', 'bSortable': false, 'bSearchable': false}, 
+                                                      {'sWidth': '190px'}, 
+                                                      {'sWidth': '35px'}, 
+                                                      {'sWidth': '50px'},
+                                                      {'sWidth': '115px'}, 
+                                                      {'sWidth': '169px'},
+                                                      {'sWidth': '25px', 'bSortable': false, 'bSearchable': false}],
+                                        'aaSorting': [[1, 'asc']],
+                                        'bPaginate': false,
+                                        'bLengthChange': false,
+                                        'bInfo': false,
+                                        'bAutoWidth': false,
+                                        'bDeferRender': true,
+                                        'bFilter': false,
+                                        'sScrollY': '164px',
+                                        'sScrollX': '100%',
+                                        'sDom': 'lrtip',
+                                        'fnInitComplete': function() {
+                                          $('#sellOrderTable_wrapper').find('.dataTables_scrollBody').jScrollPane({'showArrows': true, 'autoReinitialise': false});
+                                        },
+                                        'fnCreatedRow': function(nRow, aData, iDataIndex) {
+                                          $(nRow).bind("click", function() {
+                                                                              var radioBox = $(this).find('input:radio');
+                                                                              radioBox.attr('checked', true);
+                                                                              radioBox.change();
+                                                                              highlight(radioBox);
+                                                                            }
+                                                       );
+                                        },
+                                        'fnRowCallback': function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                                          var countValue = Globalize.parseInt(jQuery('#item_count', nRow).text());
+                                          var priceValue = Globalize.parseInt(jQuery('#selling_price', nRow).text());
+                                          jQuery('#item_count', nRow).text(Globalize.format(countValue, "n0"));
+                                          jQuery('#selling_price', nRow).text(Globalize.format(priceValue, "n0"));
+                                        }                                        
+                                        });        
+        $('#buyOrderTable').dataTable({'aoColumns': [{'sWidth': '20px', 'bSortable': false, 'bSearchable': false}, 
+                                                     {'sWidth': '190px'}, 
+                                                     {'sWidth': '52px'}, 
+                                                     {'sWidth': '52px'}, 
+                                                     {'sWidth': '50px'},
+                                                     {'sWidth': '115px'}, 
+                                                     {'sWidth': '152px'},
+                                                     {'sWidth': '25px', 'bSortable': false, 'bSearchable': false}],
+                                      'aaSorting': [[1, 'desc']],
+                                      'bPaginate': false,
+                                      'bLengthChange': false,
+                                      'bInfo': false,
+                                      'bAutoWidth': false,
+                                      'bDeferRender': true,
+                                      'bFilter': false,
+                                      'sScrollY': '164px',
+                                      'sScrollX': '100%',
+                                      'sDom': 'lrtip',
+                                      'fnInitComplete': function() {
+                                        $('#buyOrderTable_wrapper').find('.dataTables_scrollBody').jScrollPane({'showArrows': true, 'autoReinitialise': false});
+                                      },
+                                      'fnCreatedRow': function(nRow, aData, iDataIndex) {
+                                        $(nRow).bind("click", function() {
+                                                                            var radioBox = $(this).find('input:radio');
+                                                                            radioBox.attr('checked', true);
+                                                                            radioBox.change();
+                                                                            highlight(radioBox);
+                                                                          }
+                                                     );
+                                      },
+                                        'fnRowCallback': function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                                          var countValue = Globalize.parseInt(jQuery('#item_count', nRow).text());
+                                          var priceValue = Globalize.parseInt(jQuery('#buying_price', nRow).text());
+                                          jQuery('#item_count', nRow).text(Globalize.format(countValue, "n0"));
+                                          jQuery('#buying_price', nRow).text(Globalize.format(priceValue, "n0"));
+                                        }                                         
+                                      });         
+        $('[cluster_id]').each(function(index) {
+          $.postJSON('/marketLIVE/get_item_visuals', {cluster_id: $(this).attr('cluster_id'), template_ql: $(this).attr('template_ql')}, 
+                      function(response, text_status, jqXHR) {
+                          $('#icon_url').html('<img src="/staticLIVE/images/icons/' + response.icon + '.png"/>')
+                          $('#item_name').text(response.name);
+                        }, ajaxError);
+        });
+        // Reset the buttons to have nothing selected.
+        $('input:radio').prop('checked', false);
+      });
+      
+      // This code can be removed if access keys starts working ingame.
+      function hotKeys(event) {
+        if(event.keyCode == 27) {
+          closePopUpWindow('popup_info', 'overlay');
+        }
+        if (typeof AnarchyOnline != "undefined" && AnarchyOnline.IsInGame == true) {
+          //s -> 83
+          if(event.keyCode == 83 && event.altKey) {
+            sell($('input:radio[name=selectedBuyOrder]:checked'));
+          }
+          
+          //c -->67
+          if(event.keyCode == 67 && event.altKey) {
+            openCreateSellOrder();
+          }
+          //r --> 82
+          if(event.keyCode == 82 && event.altKey) {
+            openCreateBuyOrder();
+          }
+          //b-->66
+          if(event.keyCode == 66 && event.altKey) {
+            buy($('input:radio[name=selectedSellOrder]:checked'));
+          }
+        }
+      }  
+
+     function calculatePrice() {
+        var price = Globalize.parseInt($('#sellItemPrice').text());
+        var units = parseInt($('#orderUnits').val());
+        var max_units = Globalize.parseInt($('#maxItems').text());
+
+        if (max_units < units) {
+          $('#sellItemTotalPrice').html(Globalize.format(price*max_units, "n0"));
+          $('#orderUnits').val(max_units);
+        } else {
+          $('#sellItemTotalPrice').html(Globalize.format(price*units, "n0"));
+        }
+      }
+      
+      function updateFeePercentage() {
+        $('#listingFeePercentage').text(Globalize.format(parseFloat($('#orderDuration').val()), "n1"));
+      }
+        
+      function calculatePriceFeeAndTax() {
+        var price = parseInt(($('#selctUnits').val() * $('#sellOrderUnitPrice').val()));
+        var tax = price * (Globalize.parseFloat($('#sellItemTax').text()) / 100.0);
+        var taxCap = Globalize.parseInt($('#sellItemTaxCap').text());
+        var fee = price * (Globalize.parseFloat($('#listingFeePercentage').text()) / 100.0);
+        var minFee = Globalize.parseInt($('#minimumListingFee').text());
+
+        if (tax > taxCap) {
+          tax = taxCap;
+        }
+        if (fee < minFee) {
+          fee = minFee;
+        }
+        
+        var earnings = price-tax-fee
+        $('#sellItemCalculatedTax').html(Globalize.format(tax, "n0"));
+        $('#netEarnings').html(Globalize.format(earnings, "n0"));
+        $('#creationFee').html(Globalize.format(fee, "n0"));
+        
+        if (earnings > 0) { $('#netEarnings').attr('class', 'greenInline'); }
+        else { $('#netEarnings').attr('class', 'redInline'); }
+      }
+      
+      function calculatePriceAndFee() {
+        var price = parseInt(($('#buyOrderUnits').val() * $('#buyOrderUnitPrice').val()));
+        var fee = price * (Globalize.parseFloat($('#listingFeePercentage').text()) / 100.0);
+        var minFee = Globalize.parseInt($('#minimumListingFee').text());
+        
+        if (fee < minFee) {
+          fee = minFee;
+        }
+        var total = price+fee;
+        $('#priceAllUnits').html(Globalize.format(price, "n0"));
+        $('#buyItemTotalPrice').html(Globalize.format(total, "n0"));
+        $('#creationFee').html(Globalize.format(fee, "n0"));
+      }
+      
+      function updateMaxQl(num){
+        if (parseInt($('#buyOrderQLHigh option:selected').val()) < parseInt(num)) {
+          $('#buyOrderQLHigh').val(num);
+        }
+      }
+      function openCreateBuyOrder()
+      {
+        var readyFunc = function() { calculatePriceAndFee();
+                                     $('#minimumListingFee').text(Globalize.format(parseInt($('#minimumListingFee').text()), "n0"));
+                                     $('#listingFeePercentage').text(Globalize.format(parseFloat($('#listingFeePercentage').text()), "n1"));
+                                   };
+      
+        getPage('popup_info', 'overlay', '/marketLIVE/create_buy_order', {'cluster_id': 192840}, {replace: {buyOrderClusterId: 192840}}, readyFunc);      
+      }
+      
+      function buy(element) {
+        if (element.length) {
+          var order_id = element.val();
+
+          var td = $(element).parent();
+          var td_selling_price = td.next();
+          var selling_price = td_selling_price.text();
+          
+          var td_item_ql = td_selling_price.next();
+          var item_ql = td_item_ql.text();
+          
+          var td_item_count = td_item_ql.next();
+          var item_count_html = td_item_count.text();
+          var item_count = Globalize.parseInt(item_count_html);
+          
+          var td_seller = td_item_count.next();
+          var seller = td_seller.text();
+          
+          if (item_count > 100) {
+            count_html = '<input type="text" id="orderUnits" value="1" onkeyup="calculatePrice()">';
+          } else {
+            count_html = createMinMaxDropDownSelect('orderUnits', 1, item_count, "calculatePrice()");
+          }
+          getPage('popup_info', 'overlay', '/marketLIVE/buy_order', {'order_id': order_id}, {replace: {sellItemPrice: selling_price, sellItemTotalPrice: selling_price, qualityLevel: item_ql, maxItems: item_count_html, units: count_html, sellerName: seller}});
+        }else {
+          warningPopUp('<p>You need to select an item from the list.</p><br />', 'popup_info', 'overlay');
+        }
+      }
+      
+      function updateSellUnits(readyFunc, changeScript)
+      {
+        var myMax = $('#sellOrderQL option:selected').val();
+        $('#myMaxItems').text(myMax);
+
+        var maxItems = myMax;
+        var orderMax = $('#orderMaxItems').text();
+        if (orderMax != "") {
+          maxItems = Math.min(orderMax, myMax);
+        }
+        $('#currentMaxItems').html(Globalize.format(maxItems, "n0"));
+        
+        if (maxItems > 100) {
+          $('#units').html('<input type="text" id="selctUnits" value="1" size="10" onkeyup="($(\'#selctUnits\').val() > ' + maxItems + ' ? $(\'#selctUnits\').val(' + maxItems + '): {});' + changeScript + '">' );
+        } else {
+          $('#units').html(createMinMaxDropDownSelect('selctUnits', 1, maxItems, changeScript));
+        }
+        
+        readyFunc();
+      }
+      
+      function sell(element) {
+        if (element.length) {
+          var order_id = element.val();
+          var td = $(element).parent();
+          var td_buying_price = td.next();
+          var buying_price = td_buying_price.text();
+          
+          var td_item_ql_low = td_buying_price.next();
+          var item_ql_low = td_item_ql_low.text();
+          
+          var td_item_ql_high = td_item_ql_low.next();
+          var item_ql_high = td_item_ql_high.text();
+          
+          var td_item_count = td_item_ql_high.next();
+          // Hidden field, so parse it.
+          var item_count = Globalize.parseInt(td_item_count.text());
+          
+          var td_buyer = td_item_count.next();
+          var buyer = td_buyer.text();
+          
+          var readyFunc = function() { var updateFunc = function() { updateSellUnits(function() { calculateOrderTotals('#sellItemPrice', '#selctUnits', '#sellItemTax', '#sellItemTaxCap', '#sellItemCalculatedTax', '#sellItemTotalPrice'); },
+                                                                                     "calculateOrderTotals('#sellItemPrice', '#selctUnits', '#sellItemTax', '#sellItemTaxCap', '#sellItemCalculatedTax', '#sellItemTotalPrice')"); 
+                                                                     $('#slotNumber').text($('#sellOrderQL option:selected').attr('slot_num')); }
+                                       $('#sellOrderQL').bind('change', updateFunc);
+                                       $('#sellItemTaxCap').text(Globalize.format(parseInt($('#sellItemTaxCap').text()), "n0"));
+                                       $('#sellItemTax').text(Globalize.format(parseFloat($('#sellItemTax').text()), "n1"));
+                                       updateFunc();
+                                     };
+          
+          getPage('popup_info', 'overlay', '/marketLIVE/sell_order', {'order_id': order_id, 'cluster_id': $('[cluster_id]').attr('cluster_id'), 'item_ql_low': item_ql_low, 'item_ql_high': item_ql_high}, {replace: {sellItemPrice: buying_price, orderMaxItems: item_count, orderId: order_id, buyerName: buyer}}, readyFunc);
+        } else {
+          warningPopUp('<p>You need to select an item from the list.</p><br />', 'popup_info', 'overlay');
+        }
+      }
+      function openCreateSellOrder() {
+        var readyFunc = function() { updateSellUnits(calculatePriceFeeAndTax, 'calculatePriceFeeAndTax()');
+                                       $('#sellItemTaxCap').text(Globalize.format(parseInt($('#sellItemTaxCap').text()), "n0"));
+                                       $('#sellItemTax').text(Globalize.format(parseFloat($('#sellItemTax').text()), "n1"));
+                                       $('#minimumListingFee').text(Globalize.format(parseInt($('#minimumListingFee').text()), "n0"));
+                                       $('#listingFeePercentage').text(Globalize.format(parseFloat($('#listingFeePercentage').text()), "n1"));
+                                   };
+        
+        getPage('popup_info', 'overlay', '/marketLIVE/create_sell_order', {'cluster_id': 192840}, {replace: {sellOrderClusterId: 192840}}, readyFunc);
+      }
+    </script>    
+    </head>
+  <body onkeyup="hotKeys(event)">
+    <div id="menu">
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_right.png" /></div>
+          <div class="url_tab"><a href="/marketLIVE/stats"><p class="pHeader">Statistics</p></a></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_left.png" /></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_right.png" /></div>
+          <div class="url_tab"><a href="/marketLIVE/mail"><p class="pHeader">Deliveries</p></a></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_left.png" /></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_right.png" /></div>
+          <div class="url_tab"><a href="/marketLIVE/search"><p class="pHeader">Search</p></a></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_left.png" /></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_right.png" /></div>
+          <div class="url_tab"><a href="/marketLIVE/log"><p class="pHeader">Log</p></a></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_left.png" /></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_right.png" /></div>
+          <div class="url_tab"><a href="/marketLIVE/my_orders"><p class="pHeader">My Orders</p></a></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_left.png" /></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_right.png" /></div>
+          <div class="url_tab"><a href="/marketLIVE/inventory"><p class="pHeader">Inventory</p></a></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_left.png" /></div>
+    </div>
+    <div id="page">
+      <div class="marketHeader">
+        <div class="icon" id="icon_url">
+          <img src="/staticLIVE/images/ajax-loader-big.gif"/>
+        </div>
+        <div>
+          <a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 192840, 'template_ql': 1}, {})"><h1 id="item_name" cluster_id="192840" template_ql="0">Nano Crystal (Automatic Targeting)</h1></a>
+        </div>
+      </div>      
+      <div id="sell_and_buy">
+        <div style="height: 50%;">
+          <div class="header">
+            <div class="inline"><h2 class="boldInline">Sell Orders</h2></div>
+            <div onClick="openCreateSellOrder()" class="buttonRight" style="padding-top: 2px;padding-right:2px;" onMouseDown="clickedButton(this)" onmouseout="clickedButton(this, true)" onMouseUp="clickedButton(this)" pressed=false>
+              <div class="button_left"></div>
+              <div class="button_center"><a href="#" accesskey="c"><p class="button_text"><u>C</u>reate a Sell Order</p></a></div>
+              <div class="button_right"></div>
+            </div>
+          </div>
+          <table id="sellOrderTable">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Price</th>
+                <th>QL</th>
+                <th>Count</th>
+                <th>Seller</th>
+                <th>Expiration</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="pcenter"><input type="radio" name="selectedSellOrder" value="1178471" onChange="$('#sellButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td id="selling_price">325000000</td>
+                <td>75</td>
+                <td id="item_count">1</td>
+                <td>Fuzzynavel</td>
+                <td>12 days 23 h 5 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 192840, 'template_ql': 75}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr>
+                <td class="pcenter"><input type="radio" name="selectedSellOrder" value="1180047" onChange="$('#sellButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td id="selling_price">330000000</td>
+                <td>223</td>
+                <td id="item_count">1</td>
+                <td>Ekaslave</td>
+                <td>13 days 20 h 39 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 192840, 'template_ql': 223}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr>
+                <td class="pcenter"><input type="radio" name="selectedSellOrder" value="1167780" onChange="$('#sellButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td id="selling_price">340000000</td>
+                <td>224</td>
+                <td id="item_count">2</td>
+                <td>Candlemech</td>
+                <td>7 days 5 h 41 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 192840, 'template_ql': 224}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr>
+                <td class="pcenter"><input type="radio" name="selectedSellOrder" value="1179430" onChange="$('#sellButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td id="selling_price">460000000</td>
+                <td>300</td>
+                <td id="item_count">2</td>
+                <td>Shili</td>
+                <td>13 days 12 h 13 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 192840, 'template_ql': 300}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="bottomButtons" id="sellButtons">
+            <div class="button" onclick="buy($('input:radio[name=selectedSellOrder]:checked'))" style="padding-top: 2px;padding-right:2px;" onMouseDown="clickedButton(this)" onmouseout="clickedButton(this, true)" onMouseUp="clickedButton(this)" pressed=false>
+              <div class="button_left"></div>
+              <div class="button_center"><a href="#" accesskey="b"><p class="button_text"><u>B</u>uy</p></a></div>
+              <div class="button_right"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div style="height: 50%;">
+          <div class="header">
+            <div class="inline"><h2 class="boldInline">Buy Orders</h2></div>
+            <div onClick="openCreateBuyOrder()" class="buttonRight" style="padding-top: 2px;padding-right:2px;" onMouseDown="clickedButton(this)" onmouseout="clickedButton(this, true)" onMouseUp="clickedButton(this)" pressed=false>
+              <div class="button_left"></div>
+              <div class="button_center"><a href="#" accesskey="r"><p class="button_text">C<u>r</u>eate a Buy Order</p></a></div>
+              <div class="button_right"></div>
+            </div>
+          </div>
+          <table id="buyOrderTable">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Price</th>
+                <th>Min QL</th>
+                <th>Max QL</th>
+                <th>Count</th>
+                <th>Buyer</th>
+                <th>Expiration</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="pcenter"><input type="radio" name="selectedBuyOrder" value="74981" onChange="$('#buyButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td id="buying_price">280000000</td>
+                <td>300</td>
+                <td>300</td>
+                <td id="item_count">4</td>
+                <td>Reborns</td>
+                <td>8 days 19 h 45 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 192840, 'template_ql': 300}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr>
+                <td class="pcenter"><input type="radio" name="selectedBuyOrder" value="74221" onChange="$('#buyButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td id="buying_price">250000000</td>
+                <td>300</td>
+                <td>300</td>
+                <td id="item_count">4</td>
+                <td>Caritart</td>
+                <td>16 days 7 h 29 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 192840, 'template_ql': 300}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr>
+                <td class="pcenter"><input type="radio" name="selectedBuyOrder" value="75111" onChange="$('#buyButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td id="buying_price">102000000</td>
+                <td>70</td>
+                <td>300</td>
+                <td id="item_count">1</td>
+                <td>Reborns</td>
+                <td>9 days 11 h 5 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 192840, 'template_ql': 70}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="bottomButtons" id="buyButtons">
+            <div onClick="sell($('input:radio[name=selectedBuyOrder]:checked'))" class="button" style="padding-top: 2px;padding-right:2px;" onMouseDown="clickedButton(this)" onmouseout="clickedButton(this, true)" onMouseUp="clickedButton(this)"  pressed=false>
+              <div class="button_left"></div>
+              <div class="button_center"><a href="#" accesskey="s"><p class="button_text"><u>S</u>ell</p></a></div>
+              <div class="button_right"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,551 @@
+  <!doctype html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    
+    <!-- styles used on all pages -->
+    <link href="/staticLIVE/css/style.css" rel="stylesheet" type="text/css" />
+
+    <!-- styles needed by DataTables -->
+    <link href="/staticLIVE/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+    
+    <!-- styles needed by jScrollPane -->
+    <link type="text/css" href="/staticLIVE/css/jquery.jscrollpane.css" rel="stylesheet" media="all" />
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="/staticLIVE/js/jquery-1.6.4.min.js"></script>
+    
+     <!-- the mousewheel plugin - optional to provide mousewheel support -->
+    <script type="text/javascript" src="/staticLIVE/js/jquery.mousewheel.js"></script>
+
+    <!-- the DataTables script -->
+    <script type="text/javascript" src="/staticLIVE/js//datatables/jquery.dataTables.min.js"></script>
+
+    <!-- the jScrollPane script -->
+    <script type="text/javascript" src="/staticLIVE/js/jquery.jscrollpane.min.js"></script>
+    
+    <!-- Globalize (https://github.com/jquery/globalize) -->
+    <script type="text/javascript" src="/staticLIVE/js/globalize/globalize.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/staticLIVE/js/globalize/globalize.cultures.js" charset="utf-8"></script>
+    
+    <!-- Market specific JavaScript -->
+    <script type="text/javascript" src="/staticLIVE/js/market.js"></script>
+    
+    <script type="text/javascript">
+      $(document).ready(function() {
+        if (typeof AnarchyOnline == "undefined") {
+          AnarchyOnline = new Object();
+          AnarchyOnline.AcceptLanguage = [];
+          AnarchyOnline.IsInGame = false;
+        }
+        Globalize.culture(AnarchyOnline.AcceptLanguage);
+      })
+    </script>
+    
+    <link rel="alternate" media="print" href="item_view.html">
+    <title>Inventory</title>
+
+    <script type="text/javascript" id="sourcecode">
+      $(document).ready(function() {
+        // This function will sort reserved and empty slots to the bottom.
+        jQuery.fn.dataTableExt.afnSortData['inventory-sort-data'] = function  ( oSettings, iColumn )
+        {
+            var aData = [];
+            $( 'td:eq('+iColumn+')', oSettings.oApi._fnGetTrNodes(oSettings) ).each( function () {
+                if ($(this).parent().attr('cluster_id') == undefined) {
+                  aData.push( 1 );
+                } else {
+                  aData.push( 0 );
+                }
+            } );
+         
+            return aData;
+        }
+        
+        // Set up the datatable.
+        $('#inventoryTable').dataTable({'aoColumns': [{'sWidth': '20px', 'bSortable': false, 'bSearchable': false, 'sType': 'numeric', 'sSortDataType': 'inventory-sort-data'}, 
+                                                      {'sWidth': '40px', 'bSortable': false, 'bSearchable': false}, 
+                                                      {'sWidth': '35px'}, 
+                                                      {'sWidth': '50px'}, 
+                                                      {'sWidth': '493px'}, 
+                                                      {'sWidth': '25px', 'bSortable': false, 'bSearchable': false}],
+                                        'aaSortingFixed': [[0, 'asc']],
+                                        'bPaginate': false,
+                                        'bLengthChange': false,
+                                        'bInfo': false,
+                                        'bAutoWidth': false,
+                                        'bDeferRender': true,
+                                        'bFilter': true,
+                                        'sScrollY': '322px',
+                                        'sScrollX': '100%',
+                                        'sDom': 'lrtip',
+                                        'fnInitComplete': function() {
+                                          $('#inventoryTable_wrapper').find('.dataTables_scrollBody').jScrollPane({'showArrows': true, 'autoReinitialise': false, 'horizontalGutter': 10});
+                                        },
+                                        'fnCreatedRow': function(nRow, aData, iDataIndex) {
+                                          $(nRow).bind("click", function() {
+                                                                              var radioBox = $(this).find('input:radio');
+                                                                              radioBox.attr('checked', true);
+                                                                              radioBox.change();
+                                                                              highlight(radioBox);
+                                                                            }
+                                                      );
+                                        },
+                                        'fnRowCallback': function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                                          var value = Globalize.parseInt(jQuery('#item_count', nRow).text());
+                                          jQuery('#item_count', nRow).text(Globalize.format(value, "n0"));
+                                        }
+                                        });
+      
+        // Fetch the item names and icons.
+        var cluster_batch = new Array();
+        $('tr[cluster_id]').each(function(index) {
+          var id = $(this).attr('cluster_id');
+          var ql = $(this).attr('template_ql');
+          if ( $.grep(cluster_batch, function(id, ql) { return function(n) { return (n.cluster_id == id && n.template_ql == ql); } }(id, ql)) == false ) {
+            cluster_batch.push({cluster_id: id, template_ql: ql});
+          }
+        });
+        $.postJSON('/marketLIVE/get_item_visuals_batch', {clusters: cluster_batch}, 
+                      function(response, text_status, jqXHR) {
+                        var table = $('#inventoryTable').dataTable({'bRetrieve': true});
+                        $('tr[cluster_id]').each(function(index) {
+                          var id = $(this).attr('cluster_id');
+                          var ql = $(this).attr('template_ql');
+                          table.fnUpdate('<p id="item_name">' + response[id][ql].name + '</p>', this, 4, false, false);
+                          table.fnUpdate('<img height="20" width="20" src="/staticLIVE/images/icons/' + response[id][ql].icon + '.png"/>', this, 1, false, false);
+                        });
+                      }, ajaxError);
+                      
+        // Reset the buttons to have nothing selected.
+        $('input:radio').prop('checked', false);
+        
+        if (typeof AnarchyOnline == "undefined" || AnarchyOnline.IsInGame == false) {
+          $('#depositButton').attr("onclick","warningPopUp('<p>You must use a Market Terminal to deposit items and credits.</p><br />', 'popup_info', 'overlay')");
+          $('#depositButton').attr('class','buttonGrey');
+          $('#depositButton').css('float','right');
+        }
+        
+        $('#inventoryCash').text(Globalize.format(Globalize.parseInt($('#inventoryCash').text()), "n0"));
+      });
+      // This code can be removed if access keys starts working ingame.
+      function hotKeys(event) {
+        if(event.keyCode == 27) {
+          closePopUpWindow('popup_info', 'overlay');
+        }
+        if (typeof AnarchyOnline != "undefined" && AnarchyOnline.IsInGame == true) {
+          //s -> 83
+          if(event.keyCode == 83 && event.altKey) {
+            sell_click($('input:radio[name=selectedItem]:checked'));
+          }
+          
+          //w -> 87
+          if(event.keyCode == 87 && event.altKey) {
+            send_click($('input:radio[name=selectedItem]:checked'));
+          }
+          
+          //a -> 65
+          if(event.keyCode == 65 && event.altKey) {
+            open_details('/marketLIVE/item_orders/', $('input:radio[name=selectedItem]:checked').parent().parent().attr('cluster_id'));
+          }
+          
+          // r -> 82
+          if(event.keyCode == 82 && event.altKey) {
+            withdraw_click();
+          }
+
+          //t -> 84
+          if(event.keyCode == 84 && event.altKey) {
+            AnarchyOnline.OpenMarketSendWindow();
+          }
+        }
+      }
+     
+      function updateWhenTooManyUnits(div) {
+        var units = parseInt($('#' + div).val());
+        var max_units = Globalize.parseInt($('#maxItems').text());
+
+        if (max_units < units) {
+          $('#' + div).val(max_units);
+        }
+      }
+      
+      function sell_click(element) {
+        if (element.length) {
+          var tr = $(element).parent().parent();
+          var cluster_id = tr.attr('cluster_id');
+          var template_ql = tr.attr('template_ql');
+          var slot_num = tr.attr('slot_num');
+          var name = jQuery('#item_name', tr).text();
+          var icon_html = jQuery('#icon_url', tr).html();
+          var count = Globalize.parseInt(jQuery('#item_count', tr).text());
+          icon_html = $(icon_html).attr('height', 48).attr('width', 48);
+      
+
+          var readyFunc = function() { var updateFunc = function() { calculateOrderTotals('#sellItemPrice', '#selctUnits', '#sellItemTax', '#sellItemTaxCap', '#sellItemCalculatedTax', '#sellItemTotalPrice');}
+                                       var orderCount = $('#maxItems').text();
+                                       var myCount = count;
+                                       var maxCount = Math.min(orderCount, myCount);
+                                       $('#maxItems').text(maxCount);
+                                       if (maxCount > 100) {
+                                         $('#units').html('<input type="text" id="selctUnits" value="1" onkeyup="updateWhenTooManyUnits(\'selctUnits\')">');
+                                         $('#selctUnits').bind('keyup', updateFunc);
+                                       } else {
+                                         $('#units').html(createMinMaxDropDownSelect('selctUnits', 1, maxCount, "calculateOrderTotals('#sellItemPrice', '#selctUnits', '#sellItemTax', '#sellItemTaxCap', '#sellItemCalculatedTax', '#sellItemTotalPrice')"));
+                                       }
+                                       
+                                       $('#sellItemTaxCap').text(Globalize.format(parseInt($('#sellItemTaxCap').text()), "n0"));
+                                       $('#sellItemTax').text(Globalize.format(parseFloat($('#sellItemTax').text()), "n1"));
+                                       updateFunc();
+                                     };      
+          
+          getPage('popup_info', 'overlay', '/marketLIVE/get_best_buy_order', {'cluster_id': cluster_id, 'template_ql': template_ql}, {replace: {sellItemName: name, sellItemIcon: icon_html, slotNumber: slot_num }}, readyFunc);
+        }else {
+          warningPopUp('<p>You need to select an item from the list.</p><br />', 'popup_info', 'overlay');
+        }
+      }
+
+      function send_click(element) {
+        if (element.length) {
+          var tr = $(element).parent().parent();
+          var cluster_id = tr.attr('cluster_id');
+          var template_ql = tr.attr('template_ql');
+          var slot_num = tr.attr('slot_num');
+          var name = jQuery('#item_name', tr).text();
+          var icon_html = jQuery('#icon_url', tr).html();
+          var count = Globalize.parseInt(jQuery('#item_count', tr).text());
+          icon_html = $(icon_html).attr('height', 48).attr('width', 48);
+          if (count > 100) {
+            count_generator = '<input type="text" size="5" id="selctUnits" onkeyup="updateWhenTooManyUnits(\'selctUnits\')" value="1">';
+          } else {
+            count_generator = getMinMaxDropDownSelectGenerator('selctUnits', 1, count);
+          } 
+          getPage('popup_info', 'overlay', '/marketLIVE/send_item', {'cluster_id': cluster_id, 'template_ql': template_ql, 'slot_num': slot_num}, {replace: {sendItemName: name, sendItemIcon: icon_html, maxItems: count, units: count_generator, sendSlotNumber: slot_num, sendItemQL: template_ql}});
+        }else {
+          warningPopUp('<p>You need to select an item from the list.</p><br />', 'popup_info', 'overlay');
+        }
+      }
+      
+      function withdraw_click(element) {
+        balance = $("#inventoryCash").text();
+        getPage('popup_info', 'overlay', '/marketLIVE/send_cash', {}, {replace: {maxItems: balance}});
+      }
+      
+      function redeem_click(element) {
+        getPage('popup_info', 'overlay', '/marketLIVE/redeem_code', {}, {});
+      }
+
+      function use_click(element) {
+        if (element.length) {
+          var tr = $(element).parent().parent();
+          var cluster_id = tr.attr('cluster_id');
+          var template_ql = tr.attr('template_ql');
+          var slot_num = tr.attr('slot_num');
+          var item_type = -slot_num;
+          var name = jQuery('#item_name', tr).text();
+          var icon_html = jQuery('#icon_url', tr).html();
+          icon_html = $(icon_html).attr('height', 48).attr('width', 48);
+          getPage('popup_info', 'overlay', '/marketLIVE/use_item', {'cluster_id': cluster_id, 'template_ql': template_ql, 'item_type': item_type}, {replace: {useItemName: name, useItemIcon: icon_html, useItemType: item_type}});
+        } else {
+          warningPopUp('<p>You need to select an item from the list.</p><br />', 'popup_info', 'overlay');
+        }
+      }     
+      
+      function open_details(url, radio) {
+        if (typeof radio != 'undefined') {
+          location.href = url+radio;
+        } else {
+          warningPopUp('<p>You need to select an item from the list.</p><br />', 'popup_info', 'overlay');
+        }
+      }
+      
+      function item_changed(is_virtual) {
+        $('#inventoryButtons').attr('class', 'bottomButtonsActive');
+        if (is_virtual == 1) {
+          $('#useButton').attr('class','button');
+          $('#withdrawButton').attr('class','buttonGrey');
+        } else {
+          $('#useButton').attr('class','buttonGrey');
+          $('#withdrawButton').attr('class','button');
+        }
+      }
+    </script>    
+     </head>
+  <body onkeyup="hotKeys(event)">
+    <div id="menu">
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_right.png" /></div>
+          <div class="url_tab"><a href="/marketLIVE/stats"><p class="pHeader">Statistics</p></a></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_left.png" /></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_right.png" /></div>
+          <div class="url_tab"><a href="/marketLIVE/mail"><p class="pHeader">Deliveries</p></a></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_left.png" /></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_right.png" /></div>
+          <div class="url_tab"><a href="/marketLIVE/search"><p class="pHeader">Search</p></a></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_left.png" /></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_right.png" /></div>
+          <div class="url_tab"><a href="/marketLIVE/log"><p class="pHeader">Log</p></a></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_left.png" /></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_right.png" /></div>
+          <div class="url_tab"><a href="/marketLIVE/my_orders"><p class="pHeader">My Orders</p></a></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_left.png" /></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_right_active.png" /></div>
+          <div class="url_active_tab"><a href="/marketLIVE/inventory"><p class="pHeader">Inventory</p></a></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_left_active.png" /></div>
+    </div>
+    <div id="page">
+      <div class="marketHeader">
+        <div class="icon">
+          <img src="/staticLIVE/images/inventory.png"/>
+        </div>
+        <div class="pageName">
+          <h1>Inventory</h1>
+        </div>
+      </div>
+      
+      <div style="display: table; width: 100%;">
+        <div class="header" style="display: table-cell; width: 368px; border-right: 0px solid black;">
+          <h2 class="boldInline">Market Account</h2>
+          <div class="buttonRight" style="padding-top: 2px;padding-right:2px;padding-bottom:4px;" onclick="withdraw_click(this)" onMouseDown="clickedButton(this)" onmouseout="clickedButton(this, true)" onMouseUp="clickedButton(this)">
+            <div id="withdrawL" class="button_left"></div>
+            <div id="withdrawC" class="button_center"><a href="#" accesskey="r"><p class="button_text">Withd<u>r</u>aw</p></a></div>
+            <div id="withdrawR" class="button_right"></div>
+          </div>
+        </div>
+
+        <div class="header" style="display: table-cell; width: 50%;">
+          <h2 class="boldInline">Deposit</h2>
+          <div class="buttonRight" id="depositButton" style="padding-top: 2px;padding-right:2px;padding-bottom:4px;" onclick="AnarchyOnline.OpenMarketSendWindow()" onMouseDown="clickedButton(this)" onmouseout="clickedButton(this, true)" onMouseUp="clickedButton(this)">
+            <div id="withdrawL" class="button_left"></div>
+            <div id="withdrawC" class="button_center"><a href="#" accesskey="t"><p class="button_text">Deposi<u>t</u></p></a></div>
+            <div id="withdrawR" class="button_right"></div>
+          </div>
+          <div class="buttonRight" id="redeemButton" style="padding-top: 2px;padding-right:2px;padding-bottom:4px;" onclick="redeem_click(this)" onMouseDown="clickedButton(this)" onmouseout="clickedButton(this, true)" onMouseUp="clickedButton(this)">
+            <div class="button_left"></div>
+            <div class="button_center"><a href="#" accesskey="d"><p class="button_text">Re<u>d</u>eem</p></a></div>
+            <div class="button_right"></div>
+          </div>
+        </div>
+      </div>
+      <div style="display: table; width: 100%;">
+      <div id="inventory_account" style="font-size: 5px; width: 300px; height: 32px; padding-top:10px; padding-bottom:10px; display: table-cell;">
+        <p class="boldInline" style="padding-left:5px;">Account Balance: </p><p id="inventoryCash" class="inline">871642</p><p class="inline"> credits.</p>
+      </div>
+      <div style="width: 50%; height: 42px; padding-top:10px padding-bottom:10px; display: table-cell; border-left: 1px solid black;">
+        <p style="padding-left:5px;">In order to use the market, you have to transfer credits and items from your inventory to your market inventory.</p>
+      </div>
+      </div>
+      
+      <div class="header">
+        <h2 class="boldInline">Market Inventory</h2>
+        <div style="float: right;"><p class="inline">Search inventory</p><input type="text" onkeyup="$('#inventoryTable').dataTable({'bRetrieve': true}).fnFilter($(this).val())"></div>
+      </div>
+      <table id="inventoryTable">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Icon</th>
+            <th>QL</th>
+            <th>Count</th>
+            <th>Name</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr cluster_id="179408" template_ql="150" slot_num="2">
+            <td class="pcenter"><input type="radio" name="selectedItem" value="179408" onChange="item_changed(0);" /></td>
+            <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+            <td>150</td>
+            <td id="item_count">1</td>
+            <td><p id="item_name">Unknown</p></td>
+            <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 179408, 'template_ql': 150,}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+          </tr>
+          <tr cluster_id="208768" template_ql="250" slot_num="15">
+            <td class="pcenter"><input type="radio" name="selectedItem" value="208768" onChange="item_changed(0);" /></td>
+            <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+            <td>250</td>
+            <td id="item_count">2</td>
+            <td><p id="item_name">Unknown</p></td>
+            <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 208768, 'template_ql': 250,}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+          </tr>
+          <tr cluster_id="210356" template_ql="200" slot_num="6">
+            <td class="pcenter"><input type="radio" name="selectedItem" value="210356" onChange="item_changed(0);" /></td>
+            <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+            <td>200</td>
+            <td id="item_count">1</td>
+            <td><p id="item_name">Unknown</p></td>
+            <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 210356, 'template_ql': 200,}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+          </tr>
+          <tr cluster_id="213229" template_ql="250" slot_num="1">
+            <td class="pcenter"><input type="radio" name="selectedItem" value="213229" onChange="item_changed(0);" /></td>
+            <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+            <td>250</td>
+            <td id="item_count">5</td>
+            <td><p id="item_name">Unknown</p></td>
+            <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 213229, 'template_ql': 250,}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+          </tr>
+          <tr cluster_id="213749" template_ql="1" slot_num="7">
+            <td class="pcenter"><input type="radio" name="selectedItem" value="213749" onChange="item_changed(0);" /></td>
+            <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+            <td>1</td>
+            <td id="item_count">4</td>
+            <td><p id="item_name">Unknown</p></td>
+            <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 213749, 'template_ql': 1,}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+          </tr>
+          <tr cluster_id="214381" template_ql="1" slot_num="4">
+            <td class="pcenter"><input type="radio" name="selectedItem" value="214381" onChange="item_changed(0);" /></td>
+            <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+            <td>1</td>
+            <td id="item_count">2</td>
+            <td><p id="item_name">Unknown</p></td>
+            <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 214381, 'template_ql': 1,}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+          </tr>
+          <tr cluster_id="214382" template_ql="1" slot_num="3">
+            <td class="pcenter"><input type="radio" name="selectedItem" value="214382" onChange="item_changed(0);" /></td>
+            <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+            <td>1</td>
+            <td id="item_count">1</td>
+            <td><p id="item_name">Unknown</p></td>
+            <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 214382, 'template_ql': 1,}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+          </tr>
+          <tr cluster_id="215384" template_ql="300" slot_num="14">
+            <td class="pcenter"><input type="radio" name="selectedItem" value="215384" onChange="item_changed(0);" /></td>
+            <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+            <td>300</td>
+            <td id="item_count">1</td>
+            <td><p id="item_name">Unknown</p></td>
+            <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 215384, 'template_ql': 300,}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+          </tr>
+          <tr cluster_id="215655" template_ql="250" slot_num="5">
+            <td class="pcenter"><input type="radio" name="selectedItem" value="215655" onChange="item_changed(0);" /></td>
+            <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+            <td>250</td>
+            <td id="item_count">1</td>
+            <td><p id="item_name">Unknown</p></td>
+            <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 215655, 'template_ql': 250,}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+          </tr>
+          <tr>
+            <td class="reserved"></td>
+            <td class="reserved"></td>
+            <td class="reserved"></td>
+            <td class="reserved"></td>
+            <td class="reserved">Reserved for sale</td>
+            <td class="reserved"></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Empty Inventory Slot</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Empty Inventory Slot</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Empty Inventory Slot</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Empty Inventory Slot</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Empty Inventory Slot</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Empty Inventory Slot</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Empty Inventory Slot</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Empty Inventory Slot</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Empty Inventory Slot</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Empty Inventory Slot</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Empty Inventory Slot</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <div>
+        <div class="bottomButtons" style="float: left;" id="inventoryButtons">
+          <div class="button" onClick="sell_click($('input:radio[name=selectedItem]:checked'))" style="padding-top: 2px;padding-right:2px;" onMouseDown="clickedButton(this)" onmouseout="clickedButton(this, true)" onMouseUp="clickedButton(this)" pressed=false>
+            <div class="button_left"></div>
+            <div class="button_center"><a href="#" accesskey="s"><p class="button_text"><u>S</u>ell</p></a></div>
+            <div class="button_right"></div>
+          </div>
+          <div class="button" onClick="open_details('/marketLIVE/item_orders/', $('input:radio[name=selectedItem]:checked').parent().parent().attr('cluster_id'))" style="padding-top: 2px;padding-right:2px;" onMouseDown="clickedButton(this)" onmouseout="clickedButton(this, true)" onMouseUp="clickedButton(this)" pressed=false>
+            <div class="button_left"></div>
+            <div class="button_center"><a href="#" accesskey="a"><p class="button_text">Det<u>a</u>ils</p></a></div>
+            <div class="button_right"></div>
+          </div>
+          <div class="button" id="withdrawButton" onClick="send_click($('input:radio[name=selectedItem]:checked'))" style="padding-top: 2px;padding-right:2px;" onMouseDown="clickedButton(this)" onmouseout="clickedButton(this, true)" onMouseUp="clickedButton(this)" pressed=false>
+            <div class="button_left"></div>
+            <div class="button_center"><a href="#" accesskey="w"><p class="button_text"><u>W</u>ithdraw</p></a></div>
+            <div class="button_right"></div>
+          </div>
+          <div class="button" id="useButton" onClick="use_click($('input:radio[name=selectedItem]:checked'))" style="padding-top: 2px;padding-right:2px;" onMouseDown="clickedButton(this)" onmouseout="clickedButton(this, true)" onMouseUp="clickedButton(this)" pressed=false>
+            <div class="button_left"></div>
+            <div class="button_center"><a href="#" accesskey="w"><p class="button_text"><u>U</u>se</p></a></div>
+            <div class="button_right"></div>
+          </div>
+        </div>
+        <h2 class="inline" style="float: right;text-transform: none; padding-right:4px;">(11/21 free)</h2>
+      </div>
+    </div>
+  </body>
+</html>

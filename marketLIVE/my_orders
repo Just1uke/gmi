@@ -1,0 +1,375 @@
+  <!doctype html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    
+    <!-- styles used on all pages -->
+    <link href="/staticLIVE/css/style.css" rel="stylesheet" type="text/css" />
+
+    <!-- styles needed by DataTables -->
+    <link href="/staticLIVE/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+    
+    <!-- styles needed by jScrollPane -->
+    <link type="text/css" href="/staticLIVE/css/jquery.jscrollpane.css" rel="stylesheet" media="all" />
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="/staticLIVE/js/jquery-1.6.4.min.js"></script>
+    
+     <!-- the mousewheel plugin - optional to provide mousewheel support -->
+    <script type="text/javascript" src="/staticLIVE/js/jquery.mousewheel.js"></script>
+
+    <!-- the DataTables script -->
+    <script type="text/javascript" src="/staticLIVE/js//datatables/jquery.dataTables.min.js"></script>
+
+    <!-- the jScrollPane script -->
+    <script type="text/javascript" src="/staticLIVE/js/jquery.jscrollpane.min.js"></script>
+    
+    <!-- Globalize (https://github.com/jquery/globalize) -->
+    <script type="text/javascript" src="/staticLIVE/js/globalize/globalize.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/staticLIVE/js/globalize/globalize.cultures.js" charset="utf-8"></script>
+    
+    <!-- Market specific JavaScript -->
+    <script type="text/javascript" src="/staticLIVE/js/market.js"></script>
+    
+    <script type="text/javascript">
+      $(document).ready(function() {
+        if (typeof AnarchyOnline == "undefined") {
+          AnarchyOnline = new Object();
+          AnarchyOnline.AcceptLanguage = [];
+          AnarchyOnline.IsInGame = false;
+        }
+        Globalize.culture(AnarchyOnline.AcceptLanguage);
+      })
+    </script>
+    
+    <link rel="alternate" media="print" href="item_view.html">
+    <title>My Orders</title>
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        // Set up the datatable.
+        $('#sellOrderTable').dataTable({'aoColumns': [{'sWidth': '20px', 'bSortable': false, 'bSearchable': false}, 
+                                                      {'sWidth': '40px', 'bSortable': false, 'bSearchable': false}, 
+                                                      {'sWidth': '273px'}, 
+                                                      {'sWidth': '75px'},
+                                                      {'sWidth': '35px'},
+                                                      {'sWidth': '50px'},
+                                                      {'sWidth': '115px'}, 
+                                                      {'sWidth': '25px', 'bSortable': false, 'bSearchable': false}],
+                                        'bPaginate': false,
+                                        'bLengthChange': false,
+                                        'bInfo': false,
+                                        'bAutoWidth': false,
+                                        'bDeferRender': true,
+                                        'bFilter': false,
+                                        'sScrollY': '164px',
+                                        'sScrollX': '100%',
+                                        'sDom': 'lrtip',
+                                        'fnInitComplete': function() {
+                                          $('#sellOrderTable_wrapper').find('.dataTables_scrollBody').jScrollPane({'showArrows': true, 'autoReinitialise': false});
+                                        },
+                                        'fnCreatedRow': function(nRow, aData, iDataIndex) {
+                                          $(nRow).bind("click", function() {
+                                                                              var radioBox = $(this).find('input:radio');
+                                                                              radioBox.attr('checked', true);
+                                                                              radioBox.change();
+                                                                              highlight(radioBox);
+                                                                            }
+                                                       );
+                                        },
+                                        'fnRowCallback': function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                                          var countValue = Globalize.parseInt(jQuery('#item_count', nRow).text());
+                                          var priceValue = Globalize.parseInt(jQuery('#selling_price', nRow).text());
+                                          jQuery('#item_count', nRow).text(Globalize.format(countValue, "n0"));
+                                          jQuery('#selling_price', nRow).text(Globalize.format(priceValue, "n0"));
+                                        }                                        
+                                        });        
+
+        $('#buyOrderTable').dataTable({'aoColumns': [{'sWidth': '20px', 'bSortable': false, 'bSearchable': false}, 
+                                                     {'sWidth': '40px', 'bSortable': false, 'bSearchable': false}, 
+                                                     {'sWidth': '222px'}, 
+                                                     {'sWidth': '75px'}, 
+                                                     {'sWidth': '52px'}, 
+                                                     {'sWidth': '52px'}, 
+                                                     {'sWidth': '50px'},
+                                                     {'sWidth': '115px'}, 
+                                                     {'sWidth': '25px', 'bSortable': false, 'bSearchable': false}],
+                                      'bPaginate': false,
+                                      'bLengthChange': false,
+                                      'bInfo': false,
+                                      'bAutoWidth': false,
+                                      'bDeferRender': true,
+                                      'bFilter': false,
+                                      'sScrollY': '164px',
+                                      'sScrollX': '100%',
+                                      'sDom': 'lrtip',
+                                      'fnInitComplete': function() {
+                                        $('#buyOrderTable_wrapper').find('.dataTables_scrollBody').jScrollPane({'showArrows': true, 'autoReinitialise': false});
+                                      },
+                                      'fnCreatedRow': function(nRow, aData, iDataIndex) {
+                                        $(nRow).bind("click", function() {
+                                                                            var radioBox = $(this).find('input:radio');
+                                                                            radioBox.attr('checked', true);
+                                                                            radioBox.change();
+                                                                            highlight(radioBox);
+                                                                          }
+                                                     );
+                                      },
+                                        'fnRowCallback': function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                                          var countValue = Globalize.parseInt(jQuery('#item_count', nRow).text());
+                                          var priceValue = Globalize.parseInt(jQuery('#buying_price', nRow).text());
+                                          jQuery('#item_count', nRow).text(Globalize.format(countValue, "n0"));
+                                          jQuery('#buying_price', nRow).text(Globalize.format(priceValue, "n0"));
+                                        }                                        
+                                      });
+        var cluster_batch = new Array();
+        $('tr[cluster_id]').each(function(index) {
+          var id = $(this).attr('cluster_id');
+          var ql = $(this).attr('template_ql');
+          if ( $.grep(cluster_batch, function(id, ql) { return function(n) { return (n.cluster_id == id && n.template_ql == ql); } }(id, ql)) == false ) {
+            cluster_batch.push({cluster_id: id, template_ql: ql});
+          }
+        });
+        $.postJSON('/marketLIVE/get_item_visuals_batch', {clusters: cluster_batch}, 
+                      function(response, text_status, jqXHR) {
+                        $('tr[cluster_id]').each(function(index) {
+                          var table = $(this).parent().parent().dataTable({'bRetrieve': true});
+                          var id = $(this).attr('cluster_id');
+                          var ql = $(this).attr('template_ql');
+                          table.fnUpdate('<p id="item_name">' + response[id][ql].name + '</p>', this, 2, false, false);
+                          table.fnUpdate('<img height="20" width="20" src="/staticLIVE/images/icons/' + response[id][ql].icon + '.png"/>', this, 1, false, false);
+                        });
+                      });
+        // Reset the buttons to have nothing selected.
+        $('input:radio').prop('checked', false);
+      });
+      
+      // This code can be removed if access keys starts working ingame.
+      function hotKeys(event) {
+        if(event.keyCode == 27) {
+          closePopUpWindow('popup_info', 'overlay');
+        }
+        if (typeof AnarchyOnline != "undefined" && AnarchyOnline.IsInGame == true) {
+          //s -> 83
+          if(event.keyCode == 83 && event.altKey) {
+            open_details('/marketLIVE/item_orders/', $('input:radio[name=selectedBuyOrder]:checked').parent().parent().attr('cluster_id'));
+          }
+          
+          //m -> 77
+          if(event.keyCode == 77 && event.altKey) {
+            modify_sell_click($('input:radio[name=selectedSellOrder]:checked'))
+          }
+          
+          //a -> 65
+          if(event.keyCode == 65 && event.altKey) {
+            cancel_buy_click($('input:radio[name=selectedBuyOrder]:checked'));
+          }
+
+          //t -> 84
+          if(event.keyCode == 84 && event.altKey) {
+            open_details('/marketLIVE/item_orders/', $('input:radio[name=selectedSellOrder]:checked').parent().parent().attr('cluster_id'));
+          }
+          
+          //o -> 79
+          if (event.keyCode == 79 && event.altKey) {
+            modify_buy_click($('input:radio[name=selectedBuyOrder]:checked'));
+          }
+          
+          //c -->67
+          if(event.keyCode == 67 && event.altKey) {
+            cancel_sell_click($('input:radio[name=selectedSellOrder]:checked'));
+          }
+        }
+      }
+      
+      function cancel_sell_click(element) {
+        if (element.length) {
+          var tr = $(element).parent().parent();
+          var order_id = tr.attr('order_id');
+          var icon_html = jQuery('#icon_url', tr).html();
+          var name = jQuery('#item_name', tr).text();
+          var count = Globalize.parseInt(jQuery('#item_count', tr).text());
+          var price = Globalize.parseInt(jQuery('#selling_price', tr).text());
+          var order_value = Globalize.format(count * price, "n0");
+          
+          getPage('popup_info', 'overlay', '/marketLIVE/cancel_sell', {'order_id': order_id}, {replace: {orderItemName: name, orderItemIcon: icon_html, orderType: "sell", orderValue: order_value}});
+        }else {
+          warningPopUp('<p>You need to select an item from the list.</p><br />', 'popup_info', 'overlay');
+        }
+      }
+      function modify_sell_click(element) {
+        if (element.length) {
+          var tr = $(element).parent().parent();
+          var order_id = tr.attr('order_id');
+          var readyFunc = function() { 
+            $('#adjustmentFeeTotal').text(Globalize.format(Globalize.parseInt($('#adjustmentFeeTotal').text()), "n0"));
+            $('#adjustmentFeeMinimum').text(Globalize.format(Globalize.parseInt($('#adjustmentFeeMinimum').text()), "n0"));
+            $('#sellOrderOldPrice').text(Globalize.format(Globalize.parseInt($('#sellOrderOldPrice').text()), "n0"));
+            $('#adjustmentFeePercentage').text(Globalize.format(parseFloat($('#adjustmentFeePercentage').text()), "n1"));
+          };
+          getPage('popup_info', 'overlay', '/marketLIVE/modify_sell', {'order_id': order_id}, {}, readyFunc);
+        }else {
+          warningPopUp('<p>You need to select an item from the list.</p><br />', 'popup_info', 'overlay');
+        }
+      }
+      function cancel_buy_click(element) {
+        if (element.length) {
+          var tr = $(element).parent().parent();
+          var order_id = tr.attr('order_id');
+          var icon_html = jQuery('#icon_url', tr).html();
+          var name = jQuery('#item_name', tr).text();
+          var count = Globalize.parseInt(jQuery('#item_count', tr).text());
+          var price = Globalize.parseInt(jQuery('#buying_price', tr).text());
+          var order_value = Globalize.format(count * price, "n0");
+          
+          getPage('popup_info', 'overlay', '/marketLIVE/cancel_buy', {'order_id': order_id}, {replace: {orderItemName: name, orderItemIcon: icon_html, orderType: "buy", orderValue: order_value}});
+        }else {
+          warningPopUp('<p>You need to select an item from the list.</p><br />', 'popup_info', 'overlay');
+        }
+      }
+      function modify_buy_click(element) {
+        if (element.length) {
+          var tr = $(element).parent().parent();
+          var order_id = tr.attr('order_id');
+          var readyFunc = function() { 
+            $('#adjustmentFeeTotal').text(Globalize.format(Globalize.parseInt($('#adjustmentFeeTotal').text()), "n0"));
+            $('#adjustmentFeeMinimum').text(Globalize.format(Globalize.parseInt($('#adjustmentFeeMinimum').text()), "n0"));
+            $('#buyOrderOldPrice').text(Globalize.format(Globalize.parseInt($('#buyOrderOldPrice').text()), "n0"));
+            $('#adjustmentFeePercentage').text(Globalize.format(parseFloat($('#adjustmentFeePercentage').text()), "n1"));
+          };
+          getPage('popup_info', 'overlay', '/marketLIVE/modify_buy', {'order_id': order_id}, {}, readyFunc);
+        }else {
+          warningPopUp('<p>You need to select an item from the list.</p><br />', 'popup_info', 'overlay');
+        }
+      }
+      function open_details(url, radio) {
+        if (typeof radio != 'undefined') {
+          location.href = url+radio;
+        } else {
+          warningPopUp('<p>You need to select an item from the list.</p><br />', 'popup_info', 'overlay');
+        }
+      }
+    </script>  
+    </head>
+  <body onkeyup="hotKeys(event)">
+    <div id="menu">
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_right.png" /></div>
+          <div class="url_tab"><a href="/marketLIVE/stats"><p class="pHeader">Statistics</p></a></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_left.png" /></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_right.png" /></div>
+          <div class="url_tab"><a href="/marketLIVE/mail"><p class="pHeader">Deliveries</p></a></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_left.png" /></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_right.png" /></div>
+          <div class="url_tab"><a href="/marketLIVE/search"><p class="pHeader">Search</p></a></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_left.png" /></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_right.png" /></div>
+          <div class="url_tab"><a href="/marketLIVE/log"><p class="pHeader">Log</p></a></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_left.png" /></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_right_active.png" /></div>
+          <div class="url_active_tab"><a href="/marketLIVE/my_orders"><p class="pHeader">My Orders</p></a></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_left_active.png" /></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_right.png" /></div>
+          <div class="url_tab"><a href="/marketLIVE/inventory"><p class="pHeader">Inventory</p></a></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_left.png" /></div>
+    </div>
+    <div id="page">
+      <div class="marketHeader">
+        <div class="icon">
+          <img src="/staticLIVE/images/orders.png"/>
+        </div>
+        <div class="pageName">
+          <h1>My Orders</h1>
+        </div>
+      </div>
+      <div id="sell_and_buy">
+        <div style="height: 50%;">
+          <div class="header">
+            <h2>My Sell Orders</h2>
+          </div>
+          <table id="sellOrderTable">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Icon</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>QL</th>
+                <th>Count</th>
+                <th>Expiration</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr order_id="1173161" cluster_id="166353" template_ql="89">
+                <td class="pcenter"><input type="radio" name="selectedSellOrder" value="1173161" onChange="$('#sellButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="selling_price">800813500</td>
+                <td>89</td>
+                <td id="item_count">1</td>
+                <td>10 days 6 h 12 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 166353, 'template_ql': 89}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="bottomButtons" id="sellButtons">
+            <div class="button" onClick="cancel_sell_click($('input:radio[name=selectedSellOrder]:checked'))" style="padding-top: 2px;padding-right:2px;" onMouseDown="clickedButton(this)" onmouseout="clickedButton(this, true)" onMouseUp="clickedButton(this)" pressed=false>
+              <div class="button_left"></div>
+              <div class="button_center"><a href="#" accesskey="c"><p class="button_text"><u>C</u>ancel</p></a></div>
+              <div class="button_right"></div>
+            </div>
+            <div class="button" onClick="modify_sell_click($('input:radio[name=selectedSellOrder]:checked'))" style="padding-top: 2px;padding-right:2px;" onMouseDown="clickedButton(this)" onmouseout="clickedButton(this, true)" onMouseUp="clickedButton(this)" pressed=false>
+              <div class="button_left"></div>
+              <div class="button_center"><a href="#" accesskey="m"><p class="button_text"><u>M</u>odify</p></a></div>
+              <div class="button_right"></div>
+            </div>
+            <div class="button" onClick="open_details('/marketLIVE/item_orders/', $('input:radio[name=selectedSellOrder]:checked').parent().parent().attr('cluster_id'))" style="padding-top: 2px;padding-right:2px;" onMouseDown="clickedButton(this)" onmouseout="clickedButton(this, true)" onMouseUp="clickedButton(this)" pressed=false>
+              <div class="button_left"></div>
+              <div class="button_center"><a href="#" accesskey="t"><p class="button_text">De<u>t</u>ails</p></a></div>
+              <div class="button_right"></div>
+            </div>
+          </div>
+        </div>
+        <div style="height: 50%;">
+          <div class="header">
+            <h2>My Buy Orders</h2>
+          </div>
+          <table id="buyOrderTable">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Icon</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Min QL</th>
+                <th>Max QL</th>
+                <th>Count</th>
+                <th>Expiration</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+          <div class="bottomButtons" id="buyButtons">
+            <div class="button" onClick="cancel_buy_click($('input:radio[name=selectedBuyOrder]:checked'))" style="padding-top: 2px;padding-right:2px;" onMouseDown="clickedButton(this)" onmouseout="clickedButton(this, true)" onMouseUp="clickedButton(this)" pressed=false>
+              <div class="button_left"></div>
+              <div class="button_center"><a href="#" accesskey="a"><p class="button_text">C<u>a</u>ncel</p></a></div>
+              <div class="button_right"></div>
+            </div>
+            <div class="button" onClick="modify_buy_click($('input:radio[name=selectedBuyOrder]:checked'))" style="padding-top: 2px;padding-right:2px;" onMouseDown="clickedButton(this)" onmouseout="clickedButton(this, true)" onMouseUp="clickedButton(this)" pressed=false>
+              <div class="button_left"></div>
+              <div class="button_center"><a href="#" accesskey="o"><p class="button_text">M<u>o</u>dify</p></a></div>
+              <div class="button_right"></div>
+            </div>
+            <div class="button" onClick="open_details('/marketLIVE/item_orders/', $('input:radio[name=selectedBuyOrder]:checked').parent().parent().attr('cluster_id'))" style="padding-top: 2px;padding-right:2px;" onMouseDown="clickedButton(this)" onmouseout="clickedButton(this, true)" onMouseUp="clickedButton(this)" pressed=false>
+              <div class="button_left"></div>
+              <div class="button_center"><a href="#" accesskey="s"><p class="button_text">Detail<u>s</u></p></a></div>
+              <div class="button_right"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,187 @@
+/*
+ * CSS Styles that are needed by jScrollPane for it to operate correctly.
+ */
+
+.jspContainer
+{
+	overflow: hidden;
+	position: relative;
+}
+
+.jspPane
+{
+	position: absolute;
+}
+
+.jspVerticalBar
+{
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 16px;
+	height: 100%;
+	background: red;
+}
+
+.jspHorizontalBar
+{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 16px;
+	background: red;
+}
+
+.jspVerticalBar *,
+.jspHorizontalBar *
+{
+	margin: 0;
+	padding: 0;
+}
+
+.jspCap
+{
+	display: none;
+}
+
+.jspHorizontalBar .jspCap
+{
+	float: left;
+}
+
+.jspTrack
+{
+	background: #42464e;
+	position: relative;
+}
+
+.jspDrag
+{
+	background: #70757e;
+	position: relative;
+	top: 0;
+	left: 0;
+	cursor: pointer;
+  -moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+}
+
+.jspHorizontalBar .jspTrack,
+.jspHorizontalBar .jspDrag
+{
+	float: left;
+	height: 100%;
+}
+
+.jspArrow
+{
+	background: #70757e;
+	text-indent: -20000px;
+	display: block;
+	cursor: pointer;
+}
+
+.jspArrowUp
+{
+	background-image: url('../images/arrow.png');
+}
+
+.jspArrowDown
+{
+	background-image: url('../images/arrow.png');
+  -moz-transform: scaleY(-1);
+  -o-transform: scaleY(-1);
+  -webkit-transform: scaleY(-1);
+  transform: scaleY(-1);
+  filter: FlipV;
+  -ms-filter: "FlipV";
+}
+
+.jspArrowLeft
+{
+	background-image: url('../images/arrow.png');
+  -webkit-transform: rotate(270deg);
+  -moz-transform: rotate(270deg);
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+
+.jspArrowRight
+{
+	background-image: url('../images/arrow.png');
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+}
+
+.jspArrowUp.jspDisabled
+{
+	cursor: default;
+	background: #383d48;
+  background-image: url('../images/arrow2.png');
+}
+
+.jspArrowDown.jspDisabled
+{
+	cursor: default;
+	background: #383d48;
+  background-image: url('../images/arrow2.png');
+  -moz-transform: scaleY(-1);
+  -o-transform: scaleY(-1);
+  -webkit-transform: scaleY(-1);
+  transform: scaleY(-1);
+  filter: FlipV;
+  -ms-filter: "FlipV";
+}
+
+.jspArrowLeft.jspDisabled
+{
+	cursor: default;
+	background: #383d48;
+  background-image: url('../images/arrow2.png');
+  -webkit-transform: rotate(270deg);
+  -moz-transform: rotate(270deg);
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+
+.jspArrowRight.jspDisabled
+{
+	cursor: default;
+	background: #383d48;
+  background-image: url('../images/arrow2.png');
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+}
+
+.jspVerticalBar .jspArrow
+{
+	height: 16px;
+  
+}
+
+.jspHorizontalBar .jspArrow
+{
+	width: 16px;
+	float: left;
+	height: 100%;
+}
+
+.jspVerticalBar .jspArrow:focus
+{
+	outline: none;
+}
+
+.jspCorner
+{
+	background: #242424;
+	float: left;
+	height: 100%;
+}
+
+/* Yuk! CSS Hack for IE6 3 pixel bug :( */
+* html .jspCorner
+{
+	margin: 0 -3px 0 0;
+}

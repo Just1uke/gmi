@@ -1,0 +1,462 @@
+  <!doctype html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    
+    <!-- styles used on all pages -->
+    <link href="/staticLIVE/css/style.css" rel="stylesheet" type="text/css" />
+
+    <!-- styles needed by DataTables -->
+    <link href="/staticLIVE/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+    
+    <!-- styles needed by jScrollPane -->
+    <link type="text/css" href="/staticLIVE/css/jquery.jscrollpane.css" rel="stylesheet" media="all" />
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="/staticLIVE/js/jquery-1.6.4.min.js"></script>
+    
+     <!-- the mousewheel plugin - optional to provide mousewheel support -->
+    <script type="text/javascript" src="/staticLIVE/js/jquery.mousewheel.js"></script>
+
+    <!-- the DataTables script -->
+    <script type="text/javascript" src="/staticLIVE/js//datatables/jquery.dataTables.min.js"></script>
+
+    <!-- the jScrollPane script -->
+    <script type="text/javascript" src="/staticLIVE/js/jquery.jscrollpane.min.js"></script>
+    
+    <!-- Globalize (https://github.com/jquery/globalize) -->
+    <script type="text/javascript" src="/staticLIVE/js/globalize/globalize.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/staticLIVE/js/globalize/globalize.cultures.js" charset="utf-8"></script>
+    
+    <!-- Market specific JavaScript -->
+    <script type="text/javascript" src="/staticLIVE/js/market.js"></script>
+    
+    <script type="text/javascript">
+      $(document).ready(function() {
+        if (typeof AnarchyOnline == "undefined") {
+          AnarchyOnline = new Object();
+          AnarchyOnline.AcceptLanguage = [];
+          AnarchyOnline.IsInGame = false;
+        }
+        Globalize.culture(AnarchyOnline.AcceptLanguage);
+      })
+    </script>
+    
+    <link rel="alternate" media="print" href="item_view.html">
+    <title>Log</title>
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        var cluster_batch = new Array();
+        $('td[cluster_id]').each(function(index) {
+          var id = $(this).attr('cluster_id');
+          var ql = $(this).attr('template_ql');
+          if ( $.grep(cluster_batch, function(id, ql) { return function(n) { return (n.cluster_id == id && n.template_ql == ql); } }(id, ql)) == false ) {
+            cluster_batch.push({cluster_id: id, template_ql: ql});
+          }
+        });
+        $.postJSON('/marketLIVE/get_item_visuals_batch', {clusters: cluster_batch}, 
+                      function(response, text_status, jqXHR) {
+                        $('td[cluster_id]').each(function(index) {
+                          var id = $(this).attr('cluster_id');
+                          var ql = $(this).attr('template_ql');
+                          //this.innerHTML = response[id][ql].name;
+                          $(this).html(response[id][ql].name);
+                          
+                        });
+                      }, ajaxError); 
+        
+        $('.scroll-pane-arrows').jScrollPane({showArrows: true, horizontalGutter: 10});
+        $('tr').each(function() { jQuery('#cash', this).html(Globalize.format(parseInt(jQuery('#cash', this).text()), "n0"));
+                                  jQuery('#count', this).html(Globalize.format(parseInt(jQuery('#count', this).text()), "n0"));
+                                });
+      });
+      
+    </script>      
+    </head>
+  <body onkeyup="hotKeys(event)">
+    <div id="menu">
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_right.png" /></div>
+          <div class="url_tab"><a href="/marketLIVE/stats"><p class="pHeader">Statistics</p></a></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_left.png" /></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_right.png" /></div>
+          <div class="url_tab"><a href="/marketLIVE/mail"><p class="pHeader">Deliveries</p></a></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_left.png" /></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_right.png" /></div>
+          <div class="url_tab"><a href="/marketLIVE/search"><p class="pHeader">Search</p></a></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_left.png" /></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_right_active.png" /></div>
+          <div class="url_active_tab"><a href="/marketLIVE/log"><p class="pHeader">Log</p></a></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_left_active.png" /></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_right.png" /></div>
+          <div class="url_tab"><a href="/marketLIVE/my_orders"><p class="pHeader">My Orders</p></a></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_left.png" /></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_right.png" /></div>
+          <div class="url_tab"><a href="/marketLIVE/inventory"><p class="pHeader">Inventory</p></a></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_left.png" /></div>
+    </div>
+    <div id="page">
+      <div class="marketHeader">
+        <div class="icon">
+          <img src="/staticLIVE/images/log.png"/>
+        </div>
+        <div class="pageName">
+          <h1>Sales Log</h1>
+        </div>
+      </div>
+      <div class="header">
+        <h2>Recent Transactions</h2>
+      </div>
+      <div>
+        <div class="tableHeader">
+          <table style="width:720px;">
+            <colgroup>
+              <col width="130px">
+              <col width="140px">
+              <col width="45px">
+              <col width="45px">
+              <col width="45px">
+              <col width="95px">
+              <col width="75px">
+              <col width="145px">
+            </colgroup>
+            <tr>
+              <th>Type</th>
+              <th>Name</th>
+              <th>Min QL</th>
+              <th>Max QL</th>
+              <th>Count</th>
+              <th>Price</th>
+              <th>Character</th>
+              <th>Date</th>
+            </tr>
+          </table>
+        </div>
+        <div id="mySales" class="scroll-pane-arrows" style="height:423px;">
+          <table style="width: 703px;">
+            <colgroup>
+              <col width="130px">
+              <col width="140px">
+              <col width="45px">
+              <col width="45px">
+              <col width="45px">
+              <col width="95px">
+              <col width="75px">
+              <col width="128px">
+            </colgroup>
+            <tr>
+              <td>Sell order fee</td>
+              <td cluster_id="166353" template_ql="89">Unknown</td>
+              <td>89</td>
+              <td></td>
+              <td id="count">1</td>
+              <td id="cash" class="redTextColor">-4004068</td>
+              <td><p></p></td>
+              <td>2014-07-27T09:28:08</td>
+            </tr>
+            <tr>
+              <td>Sell order creation</td>
+              <td cluster_id="166353" template_ql="89">Unknown</td>
+              <td>89</td>
+              <td></td>
+              <td id="count">1</td>
+              <td id="cash" class="greenTextColor">800813500</td>
+              <td><p></p></td>
+              <td>2014-07-27T09:28:08</td>
+            </tr>
+            <tr>
+              <td>Item transfer</td>
+              <td cluster_id="166353" template_ql="89">Unknown</td>
+              <td>89</td>
+              <td></td>
+              <td id="count">1</td>
+              <td></td>
+              <td><p></p></td>
+              <td>2014-07-27T09:26:01</td>
+            </tr>
+            <tr>
+              <td>Credit transfer</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td id="cash" class="greenTextColor">2000000</td>
+              <td><p></p></td>
+              <td>2014-07-27T09:24:01</td>
+            </tr>
+            <tr>
+              <td>Item withdrawal</td>
+              <td cluster_id="166353" template_ql="89">Unknown</td>
+              <td>89</td>
+              <td></td>
+              <td id="count">1</td>
+              <td></td>
+              <td><p></p></td>
+              <td>2014-07-27T09:23:12</td>
+            </tr>
+            <tr>
+              <td>Sell order cancellation</td>
+              <td cluster_id="166353" template_ql="89">Unknown</td>
+              <td>89</td>
+              <td></td>
+              <td id="count">1</td>
+              <td></td>
+              <td><p></p></td>
+              <td>2014-07-27T09:18:01</td>
+            </tr>
+            <tr>
+              <td>Sell order creation</td>
+              <td cluster_id="166353" template_ql="89">Unknown</td>
+              <td>89</td>
+              <td></td>
+              <td id="count">1</td>
+              <td id="cash" class="greenTextColor">515000000</td>
+              <td><p></p></td>
+              <td>2014-07-27T09:02:35</td>
+            </tr>
+            <tr>
+              <td>Sell order fee</td>
+              <td cluster_id="166353" template_ql="89">Unknown</td>
+              <td>89</td>
+              <td></td>
+              <td id="count">1</td>
+              <td id="cash" class="redTextColor">-2575000</td>
+              <td><p></p></td>
+              <td>2014-07-27T09:02:35</td>
+            </tr>
+            <tr>
+              <td>Credit transfer</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td id="cash" class="greenTextColor">5000000</td>
+              <td><p></p></td>
+              <td>2014-07-27T09:02:01</td>
+            </tr>
+            <tr>
+              <td>Item transfer</td>
+              <td cluster_id="166353" template_ql="89">Unknown</td>
+              <td>89</td>
+              <td></td>
+              <td id="count">1</td>
+              <td></td>
+              <td><p></p></td>
+              <td>2014-07-27T09:00:01</td>
+            </tr>
+            <tr>
+              <td>Item withdrawal</td>
+              <td cluster_id="166353" template_ql="89">Unknown</td>
+              <td>89</td>
+              <td></td>
+              <td id="count">1</td>
+              <td></td>
+              <td><p></p></td>
+              <td>2014-07-27T07:04:19</td>
+            </tr>
+            <tr>
+              <td>Sell order cancellation</td>
+              <td cluster_id="166353" template_ql="89">Unknown</td>
+              <td>89</td>
+              <td></td>
+              <td id="count">1</td>
+              <td></td>
+              <td><p></p></td>
+              <td>2014-07-27T06:57:03</td>
+            </tr>
+            <tr>
+              <td>Sell order fee</td>
+              <td cluster_id="166353" template_ql="89">Unknown</td>
+              <td>89</td>
+              <td></td>
+              <td id="count">1</td>
+              <td id="cash" class="redTextColor">-2500000</td>
+              <td><p></p></td>
+              <td>2014-07-27T05:07:49</td>
+            </tr>
+            <tr>
+              <td>Sell order creation</td>
+              <td cluster_id="166353" template_ql="89">Unknown</td>
+              <td>89</td>
+              <td></td>
+              <td id="count">1</td>
+              <td id="cash" class="greenTextColor">500000001</td>
+              <td><p></p></td>
+              <td>2014-07-27T05:07:49</td>
+            </tr>
+            <tr>
+              <td>Item transfer</td>
+              <td cluster_id="166353" template_ql="89">Unknown</td>
+              <td>89</td>
+              <td></td>
+              <td id="count">1</td>
+              <td></td>
+              <td><p></p></td>
+              <td>2014-07-27T05:06:02</td>
+            </tr>
+            <tr>
+              <td>Purchase</td>
+              <td cluster_id="209658" template_ql="198">Unknown</td>
+              <td>198</td>
+              <td></td>
+              <td id="count">1</td>
+              <td id="cash" class="redTextColor">-55000000</td>
+              <td>Subentee</td>
+              <td>2014-07-18T04:39:38</td>
+            </tr>
+            <tr>
+              <td>Buy order cancellation</td>
+              <td cluster_id="193707" template_ql="1">Unknown</td>
+              <td>1</td>
+              <td>300</td>
+              <td id="count">1</td>
+              <td id="cash" class="greenTextColor">1</td>
+              <td><p></p></td>
+              <td>2014-07-15T21:50:26</td>
+            </tr>
+            <tr>
+              <td>Buy order cancellation</td>
+              <td cluster_id="193707" template_ql="1">Unknown</td>
+              <td>1</td>
+              <td>300</td>
+              <td id="count">1</td>
+              <td id="cash" class="greenTextColor">2</td>
+              <td><p></p></td>
+              <td>2014-07-15T21:50:26</td>
+            </tr>
+            <tr>
+              <td>Sell order cancellation</td>
+              <td cluster_id="210356" template_ql="200">Unknown</td>
+              <td>200</td>
+              <td></td>
+              <td id="count">1</td>
+              <td></td>
+              <td><p></p></td>
+              <td>2014-07-15T21:50:15</td>
+            </tr>
+            <tr>
+              <td>Sell order cancellation</td>
+              <td cluster_id="179408" template_ql="150">Unknown</td>
+              <td>150</td>
+              <td></td>
+              <td id="count">1</td>
+              <td></td>
+              <td><p></p></td>
+              <td>2014-07-15T21:50:06</td>
+            </tr>
+            <tr>
+              <td>Sell order cancellation</td>
+              <td cluster_id="208768" template_ql="250">Unknown</td>
+              <td>250</td>
+              <td></td>
+              <td id="count">1</td>
+              <td></td>
+              <td><p></p></td>
+              <td>2014-07-15T21:50:06</td>
+            </tr>
+            <tr>
+              <td>Buy order fee</td>
+              <td cluster_id="193707" template_ql="1">Unknown</td>
+              <td>1</td>
+              <td>300</td>
+              <td id="count">1</td>
+              <td id="cash" class="redTextColor">-1000</td>
+              <td><p></p></td>
+              <td>2014-07-15T20:11:04</td>
+            </tr>
+            <tr>
+              <td>Buy order creation</td>
+              <td cluster_id="193707" template_ql="1">Unknown</td>
+              <td>1</td>
+              <td>300</td>
+              <td id="count">1</td>
+              <td id="cash" class="redTextColor">-2</td>
+              <td><p></p></td>
+              <td>2014-07-15T20:11:04</td>
+            </tr>
+            <tr>
+              <td>Buy order fee</td>
+              <td cluster_id="193707" template_ql="1">Unknown</td>
+              <td>1</td>
+              <td>300</td>
+              <td id="count">1</td>
+              <td id="cash" class="redTextColor">-1000</td>
+              <td><p></p></td>
+              <td>2014-07-15T20:10:57</td>
+            </tr>
+            <tr>
+              <td>Buy order creation</td>
+              <td cluster_id="193707" template_ql="1">Unknown</td>
+              <td>1</td>
+              <td>300</td>
+              <td id="count">1</td>
+              <td id="cash" class="redTextColor">-1</td>
+              <td><p></p></td>
+              <td>2014-07-15T20:10:57</td>
+            </tr>
+            <tr>
+              <td>Sell order fee</td>
+              <td cluster_id="210356" template_ql="200">Unknown</td>
+              <td>200</td>
+              <td></td>
+              <td id="count">1</td>
+              <td id="cash" class="redTextColor">-50000</td>
+              <td><p></p></td>
+              <td>2014-07-15T19:22:35</td>
+            </tr>
+            <tr>
+              <td>Sell order creation</td>
+              <td cluster_id="210356" template_ql="200">Unknown</td>
+              <td>200</td>
+              <td></td>
+              <td id="count">1</td>
+              <td id="cash" class="greenTextColor">10000000</td>
+              <td><p></p></td>
+              <td>2014-07-15T19:22:35</td>
+            </tr>
+            <tr>
+              <td>Sell order fee</td>
+              <td cluster_id="208768" template_ql="250">Unknown</td>
+              <td>250</td>
+              <td></td>
+              <td id="count">1</td>
+              <td id="cash" class="redTextColor">-100000</td>
+              <td><p></p></td>
+              <td>2014-07-15T19:21:09</td>
+            </tr>
+            <tr>
+              <td>Sell order creation</td>
+              <td cluster_id="208768" template_ql="250">Unknown</td>
+              <td>250</td>
+              <td></td>
+              <td id="count">1</td>
+              <td id="cash" class="greenTextColor">20000000</td>
+              <td><p></p></td>
+              <td>2014-07-15T19:21:09</td>
+            </tr>
+            <tr>
+              <td>Sell order creation</td>
+              <td cluster_id="179408" template_ql="150">Unknown</td>
+              <td>150</td>
+              <td></td>
+              <td id="count">1</td>
+              <td id="cash" class="greenTextColor">10000000</td>
+              <td><p></p></td>
+              <td>2014-07-15T06:13:48</td>
+            </tr>
+            <tr>
+              <td>Sell order fee</td>
+              <td cluster_id="179408" template_ql="150">Unknown</td>
+              <td>150</td>
+              <td></td>
+              <td id="count">1</td>
+              <td id="cash" class="redTextColor">-50000</td>
+              <td><p></p></td>
+              <td>2014-07-15T06:13:48</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

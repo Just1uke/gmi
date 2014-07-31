@@ -1,0 +1,155 @@
+  <!doctype html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    
+    <!-- styles used on all pages -->
+    <link href="/staticLIVE/css/style.css" rel="stylesheet" type="text/css" />
+
+    <!-- styles needed by DataTables -->
+    <link href="/staticLIVE/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+    
+    <!-- styles needed by jScrollPane -->
+    <link type="text/css" href="/staticLIVE/css/jquery.jscrollpane.css" rel="stylesheet" media="all" />
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="/staticLIVE/js/jquery-1.6.4.min.js"></script>
+    
+     <!-- the mousewheel plugin - optional to provide mousewheel support -->
+    <script type="text/javascript" src="/staticLIVE/js/jquery.mousewheel.js"></script>
+
+    <!-- the DataTables script -->
+    <script type="text/javascript" src="/staticLIVE/js//datatables/jquery.dataTables.min.js"></script>
+
+    <!-- the jScrollPane script -->
+    <script type="text/javascript" src="/staticLIVE/js/jquery.jscrollpane.min.js"></script>
+    
+    <!-- Globalize (https://github.com/jquery/globalize) -->
+    <script type="text/javascript" src="/staticLIVE/js/globalize/globalize.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/staticLIVE/js/globalize/globalize.cultures.js" charset="utf-8"></script>
+    
+    <!-- Market specific JavaScript -->
+    <script type="text/javascript" src="/staticLIVE/js/market.js"></script>
+    
+    <script type="text/javascript">
+      $(document).ready(function() {
+        if (typeof AnarchyOnline == "undefined") {
+          AnarchyOnline = new Object();
+          AnarchyOnline.AcceptLanguage = [];
+          AnarchyOnline.IsInGame = false;
+        }
+        Globalize.culture(AnarchyOnline.AcceptLanguage);
+      })
+    </script>
+    
+    <link rel="alternate" media="print" href="item_view.html">
+    <title>Mail</title>
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        var cluster_batch = new Array();
+        $('tr[cluster_id]').each(function(index) {
+          var id = $(this).attr('cluster_id');
+          var ql = $(this).attr('template_ql');
+          if ( $.grep(cluster_batch, function(id, ql) { return function(n) { return (n.cluster_id == id && n.template_ql == ql); } }(id, ql)) == false ) {
+            cluster_batch.push({cluster_id: id, template_ql: ql});
+          }
+        });
+        $.postJSON('/marketLIVE/get_item_visuals_batch', {clusters: cluster_batch}, 
+                      function(response, text_status, jqXHR) {
+                        $('tr[cluster_id]').each(function(index) {
+                          var id = $(this).attr('cluster_id');
+                          var ql = $(this).attr('template_ql');
+                          jQuery('#icon_url', this).html('<img height="20" width="20" src="/staticLIVE/images/icons/' + response[id][ql].icon + '.png"/>');
+                          jQuery('#item_name', this).text(response[id][ql].name);
+                        });
+                      }, ajaxError); 
+        $(function() {
+          $('.scroll-pane-arrows').jScrollPane(
+            {
+              showArrows: true,
+              autoReinitialise: true,
+              horizontalGutter: 10
+            }
+          );
+        });
+      }); 
+    </script>      
+    </head>
+  <body onkeyup="hotKeys(event)">
+    <div id="menu">
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_right.png" /></div>
+          <div class="url_tab"><a href="/marketLIVE/stats"><p class="pHeader">Statistics</p></a></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_left.png" /></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_right_active.png" /></div>
+          <div class="url_active_tab"><a href="/marketLIVE/mail"><p class="pHeader">Deliveries</p></a></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_left_active.png" /></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_right.png" /></div>
+          <div class="url_tab"><a href="/marketLIVE/search"><p class="pHeader">Search</p></a></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_left.png" /></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_right.png" /></div>
+          <div class="url_tab"><a href="/marketLIVE/log"><p class="pHeader">Log</p></a></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_left.png" /></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_right.png" /></div>
+          <div class="url_tab"><a href="/marketLIVE/my_orders"><p class="pHeader">My Orders</p></a></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_left.png" /></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_right.png" /></div>
+          <div class="url_tab"><a href="/marketLIVE/inventory"><p class="pHeader">Inventory</p></a></div>
+          <div class="picture_tab"><img src="/staticLIVE/images/tab_left.png" /></div>
+    </div>
+    <div id="page">
+      <div class="marketHeader">
+        <div class="icon">
+          <img src="/staticLIVE/images/mail.png"/>
+        </div>
+        <div class="pageName">
+          <h1>Outgoing Deliveries</h1>
+        </div>
+      </div>
+      <div class="header">
+        <h2>Pending Deliveries</h2>
+      </div>
+      <div class="tableHeader">
+        <table style="width:720px;">
+          <colgroup>
+            <col width="40px">
+            <col width="50px">
+            <col width="70px">
+            <col width="100%">
+            <col width="30px">
+          </colgroup>
+          <tr>
+            <th>Icon</th>
+            <th>QL</th>
+            <th>Count</th>
+            <th colspan="2">Name</th>
+          </tr>
+        </table>
+      </div>
+      <div id="mySales" class="scroll-pane-arrows" style="height:255px;">
+        <table style="width:703px;">
+          <colgroup>
+            <col width="40px">
+            <col width="50px">
+            <col width="70px">
+            <col width="100%">
+            <col width="30px">
+          </colgroup>
+          <tr><td colspan="4" class="pcenter">No mail is being sent to your character from the market at this time.</td></td>
+        </table>
+      </div>
+      <div class="header">
+        <h2>Delivery Service</h2>
+      </div>
+      <div><p>
+        The Omni-Trade Global Market Interface offers safe, reliable, and fast delivery of items and credits to any mail terminal on Rubi-Ka.<br />
+        For your safety, all transactions are screened and verified before entering Omni-Tek holdings & secure deposit.<br />
+        <br />
+        All items displayed on this page are currently pending screening & verification by the Omni-Trade Automated Security System. This process may take several minutes.
+        While transactions are being verified, you may continue to utilize and interact with the Global Market Interface system.<br />
+        <br />
+        Please note: After screening & verification it may take several additional minutes to transcode the item into the Omni-Tek Communications global holdings & secure deposit. We thank you for your patience.<br />
+      </p></div>
+    </div>
+  </body>
+</html>
