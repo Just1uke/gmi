@@ -171,6 +171,11 @@
         <div class="pageName">
           <h1>Search</h1>
         </div>
+        <div id="banner">
+          <p class="greenTextColor" style="font-weight: bold; display: inline; padding-left:5px;padding-right:0px;">Ignored search terms (too short):</p><p class="greenTextColor" style="display: inline;padding-left:5px;padding-right:5px;">
+          "of"
+          </p>
+        </div>
       </div>
     <div class="header">
         <h2>Item Search</h2>
@@ -184,7 +189,7 @@
       <tr>
         <td style="border: 0px ;">
           <p class="boldInline">Name:</p>
-          <input type="text" size=51 name="ItemName" value="supple" onkeydown="searchForItem('result','/marketLIVE/do_search', event,'/staticLIVE/images/pluss.png')" />
+          <input type="text" size=51 name="ItemName" value="tear of oed" onkeydown="searchForItem('result','/marketLIVE/do_search', event,'/staticLIVE/images/pluss.png')" />
         </td>
         <td style="border: 0px ;">
           <p class="boldInline">Category:&nbsp;
@@ -277,24 +282,9 @@
             <col width="30px">
           </colgroup>
           <tr>
-            <td class="pcenter"><img height="20" width="20" src="/staticLIVE/images/icons/83355.png"/></td>
-            <td><a href="/marketLIVE/item_orders/58905">Instruction Disc (Nano Cloud Supplement)</a></td>
-            <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 58905}, {})"><img src="/staticLIVE/images/item_info.png" /></a></td>
-          </tr>
-          <tr>
-            <td class="pcenter"><img height="20" width="20" src="/staticLIVE/images/icons/83060.png"/></td>
-            <td><a href="/marketLIVE/item_orders/58906">Compiled Algorithm (Nano Cloud Supplement)</a></td>
-            <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 58906}, {})"><img src="/staticLIVE/images/item_info.png" /></a></td>
-          </tr>
-          <tr>
-            <td class="pcenter"><img height="20" width="20" src="/staticLIVE/images/icons/83648.png"/></td>
-            <td><a href="/marketLIVE/item_orders/58907">Programmed Photon Particle Emitter (Nano Cloud Supplement)</a></td>
-            <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 58907}, {})"><img src="/staticLIVE/images/item_info.png" /></a></td>
-          </tr>
-          <tr>
-            <td class="pcenter"><img height="20" width="20" src="/staticLIVE/images/icons/290351.png"/></td>
-            <td><a href="/marketLIVE/item_orders/193705">Supple Lead Viralbots</a></td>
-            <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 193705}, {})"><img src="/staticLIVE/images/item_info.png" /></a></td>
+            <td class="pcenter"><img height="20" width="20" src="/staticLIVE/images/icons/161141.png"/></td>
+            <td><a href="/marketLIVE/item_orders/190648">Tear of Oedipus</a></td>
+            <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 190648}, {})"><img src="/staticLIVE/images/item_info.png" /></a></td>
           </tr>
         </table>
       </div>
