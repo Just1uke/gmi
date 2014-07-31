@@ -300,15 +300,165 @@
               </tr>
             </thead>
             <tbody>
-              <tr order_id="1173161" cluster_id="166353" template_ql="89">
-                <td class="pcenter"><input type="radio" name="selectedSellOrder" value="1173161" onChange="$('#sellButtons').attr('class', 'bottomButtonsActive')" /></td>
+              <tr order_id="1177308" cluster_id="166353" template_ql="89">
+                <td class="pcenter"><input type="radio" name="selectedSellOrder" value="1177308" onChange="$('#sellButtons').attr('class', 'bottomButtonsActive')" /></td>
                 <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
                 <td><p id="item_name">Unknown</p></td>
-                <td id="selling_price">800813500</td>
+                <td id="selling_price">195000000</td>
                 <td>89</td>
                 <td id="item_count">1</td>
-                <td>10 days 6 h 12 min</td>
+                <td>12 days 10 h 3 min</td>
                 <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 166353, 'template_ql': 89}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="1177320" cluster_id="166437" template_ql="197">
+                <td class="pcenter"><input type="radio" name="selectedSellOrder" value="1177320" onChange="$('#sellButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="selling_price">3000000</td>
+                <td>197</td>
+                <td id="item_count">1</td>
+                <td>12 days 10 h 12 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 166437, 'template_ql': 197}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="1177321" cluster_id="190389" template_ql="230">
+                <td class="pcenter"><input type="radio" name="selectedSellOrder" value="1177321" onChange="$('#sellButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="selling_price">23000000</td>
+                <td>230</td>
+                <td id="item_count">1</td>
+                <td>12 days 10 h 14 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 190389, 'template_ql': 230}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="1177327" cluster_id="210348" template_ql="250">
+                <td class="pcenter"><input type="radio" name="selectedSellOrder" value="1177327" onChange="$('#sellButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="selling_price">13000000</td>
+                <td>250</td>
+                <td id="item_count">1</td>
+                <td>12 days 10 h 18 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 210348, 'template_ql': 250}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="1178087" cluster_id="208721" template_ql="250">
+                <td class="pcenter"><input type="radio" name="selectedSellOrder" value="1178087" onChange="$('#sellButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="selling_price">23750000</td>
+                <td>250</td>
+                <td id="item_count">3</td>
+                <td>12 days 18 h 48 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 208721, 'template_ql': 250}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="1178090" cluster_id="184152" template_ql="1">
+                <td class="pcenter"><input type="radio" name="selectedSellOrder" value="1178090" onChange="$('#sellButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="selling_price">50000000</td>
+                <td>1</td>
+                <td id="item_count">1</td>
+                <td>12 days 18 h 48 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 184152, 'template_ql': 1}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="1178094" cluster_id="43622" template_ql="128">
+                <td class="pcenter"><input type="radio" name="selectedSellOrder" value="1178094" onChange="$('#sellButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="selling_price">25000000</td>
+                <td>128</td>
+                <td id="item_count">1</td>
+                <td>12 days 18 h 51 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 43622, 'template_ql': 128}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="1178102" cluster_id="192692" template_ql="175">
+                <td class="pcenter"><input type="radio" name="selectedSellOrder" value="1178102" onChange="$('#sellButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="selling_price">32500000</td>
+                <td>175</td>
+                <td id="item_count">1</td>
+                <td>12 days 18 h 54 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 192692, 'template_ql': 175}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="1178155" cluster_id="66422" template_ql="37">
+                <td class="pcenter"><input type="radio" name="selectedSellOrder" value="1178155" onChange="$('#sellButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="selling_price">50000000</td>
+                <td>37</td>
+                <td id="item_count">1</td>
+                <td>12 days 19 h 32 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 66422, 'template_ql': 37}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="1178204" cluster_id="191767" template_ql="250">
+                <td class="pcenter"><input type="radio" name="selectedSellOrder" value="1178204" onChange="$('#sellButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="selling_price">78500000</td>
+                <td>250</td>
+                <td id="item_count">1</td>
+                <td>12 days 19 h 56 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 191767, 'template_ql': 250}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="1178614" cluster_id="196878" template_ql="1">
+                <td class="pcenter"><input type="radio" name="selectedSellOrder" value="1178614" onChange="$('#sellButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="selling_price">78500</td>
+                <td>1</td>
+                <td id="item_count">49</td>
+                <td>13 days 0 h 7 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 196878, 'template_ql': 1}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="1178712" cluster_id="43622" template_ql="200">
+                <td class="pcenter"><input type="radio" name="selectedSellOrder" value="1178712" onChange="$('#sellButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="selling_price">65000000</td>
+                <td>200</td>
+                <td id="item_count">1</td>
+                <td>13 days 2 h 5 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 43622, 'template_ql': 200}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="1178714" cluster_id="191647" template_ql="160">
+                <td class="pcenter"><input type="radio" name="selectedSellOrder" value="1178714" onChange="$('#sellButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="selling_price">515000000</td>
+                <td>160</td>
+                <td id="item_count">1</td>
+                <td>13 days 2 h 10 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 191647, 'template_ql': 160}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="1178755" cluster_id="220578" template_ql="1">
+                <td class="pcenter"><input type="radio" name="selectedSellOrder" value="1178755" onChange="$('#sellButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="selling_price">48500000</td>
+                <td>1</td>
+                <td id="item_count">1</td>
+                <td>13 days 2 h 45 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 220578, 'template_ql': 1}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="1178756" cluster_id="66423" template_ql="35">
+                <td class="pcenter"><input type="radio" name="selectedSellOrder" value="1178756" onChange="$('#sellButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="selling_price">50000000</td>
+                <td>35</td>
+                <td id="item_count">1</td>
+                <td>13 days 2 h 51 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 66423, 'template_ql': 35}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="1179574" cluster_id="215264" template_ql="300">
+                <td class="pcenter"><input type="radio" name="selectedSellOrder" value="1179574" onChange="$('#sellButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="selling_price">27500000</td>
+                <td>300</td>
+                <td id="item_count">1</td>
+                <td>13 days 13 h 35 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 215264, 'template_ql': 300}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
               </tr>
             </tbody>
           </table>
@@ -349,6 +499,325 @@
               </tr>
             </thead>
             <tbody>
+              <tr order_id="70399" cluster_id="215269" template_ql="300">
+                <td class="pcenter"><input type="radio" name="selectedBuyOrder" value="70399" onChange="$('#buyButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="buying_price">1</td>
+                <td>300</td>
+                <td>300</td>
+                <td id="item_count">11</td>
+                <td>19 h 36 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 215269, 'template_ql': 300}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="70400" cluster_id="217550" template_ql="200">
+                <td class="pcenter"><input type="radio" name="selectedBuyOrder" value="70400" onChange="$('#buyButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="buying_price">1</td>
+                <td>200</td>
+                <td>200</td>
+                <td id="item_count">11</td>
+                <td>19 h 37 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 217550, 'template_ql': 200}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="70883" cluster_id="197154" template_ql="160">
+                <td class="pcenter"><input type="radio" name="selectedBuyOrder" value="70883" onChange="$('#buyButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="buying_price">1</td>
+                <td>160</td>
+                <td>161</td>
+                <td id="item_count">1</td>
+                <td>5 days 8 h 11 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 197154, 'template_ql': 160}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="70936" cluster_id="214340" template_ql="215">
+                <td class="pcenter"><input type="radio" name="selectedBuyOrder" value="70936" onChange="$('#buyButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="buying_price">1</td>
+                <td>215</td>
+                <td>215</td>
+                <td id="item_count">11</td>
+                <td>5 days 20 h 52 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 214340, 'template_ql': 215}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="70937" cluster_id="216752" template_ql="150">
+                <td class="pcenter"><input type="radio" name="selectedBuyOrder" value="70937" onChange="$('#buyButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="buying_price">1</td>
+                <td>150</td>
+                <td>150</td>
+                <td id="item_count">11</td>
+                <td>5 days 20 h 52 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 216752, 'template_ql': 150}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="70939" cluster_id="215427" template_ql="300">
+                <td class="pcenter"><input type="radio" name="selectedBuyOrder" value="70939" onChange="$('#buyButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="buying_price">1</td>
+                <td>300</td>
+                <td>300</td>
+                <td id="item_count">11</td>
+                <td>5 days 20 h 54 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 215427, 'template_ql': 300}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="71086" cluster_id="208768" template_ql="250">
+                <td class="pcenter"><input type="radio" name="selectedBuyOrder" value="71086" onChange="$('#buyButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="buying_price">1</td>
+                <td>250</td>
+                <td>250</td>
+                <td id="item_count">11</td>
+                <td>7 days 0 h 26 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 208768, 'template_ql': 250}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="72131" cluster_id="215392" template_ql="300">
+                <td class="pcenter"><input type="radio" name="selectedBuyOrder" value="72131" onChange="$('#buyButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="buying_price">1</td>
+                <td>300</td>
+                <td>300</td>
+                <td id="item_count">11</td>
+                <td>19 days 17 h 39 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 215392, 'template_ql': 300}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="72132" cluster_id="38382" template_ql="40">
+                <td class="pcenter"><input type="radio" name="selectedBuyOrder" value="72132" onChange="$('#buyButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="buying_price">1</td>
+                <td>40</td>
+                <td>200</td>
+                <td id="item_count">10</td>
+                <td>19 days 17 h 40 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 38382, 'template_ql': 40}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="72276" cluster_id="61018" template_ql="200">
+                <td class="pcenter"><input type="radio" name="selectedBuyOrder" value="72276" onChange="$('#buyButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="buying_price">1</td>
+                <td>200</td>
+                <td>250</td>
+                <td id="item_count">11</td>
+                <td>22 days 0 h 30 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 61018, 'template_ql': 200}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="72469" cluster_id="175433" template_ql="220">
+                <td class="pcenter"><input type="radio" name="selectedBuyOrder" value="72469" onChange="$('#buyButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="buying_price">1</td>
+                <td>220</td>
+                <td>220</td>
+                <td id="item_count">10</td>
+                <td>25 days 3 h 30 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 175433, 'template_ql': 220}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="72676" cluster_id="221775" template_ql="1">
+                <td class="pcenter"><input type="radio" name="selectedBuyOrder" value="72676" onChange="$('#buyButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="buying_price">2000000</td>
+                <td>1</td>
+                <td>1</td>
+                <td id="item_count">11</td>
+                <td>28 days 16 h 42 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 221775, 'template_ql': 1}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="72677" cluster_id="200791" template_ql="220">
+                <td class="pcenter"><input type="radio" name="selectedBuyOrder" value="72677" onChange="$('#buyButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="buying_price">1</td>
+                <td>220</td>
+                <td>220</td>
+                <td id="item_count">11</td>
+                <td>28 days 16 h 44 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 200791, 'template_ql': 220}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="73125" cluster_id="215424" template_ql="300">
+                <td class="pcenter"><input type="radio" name="selectedBuyOrder" value="73125" onChange="$('#buyButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="buying_price">1</td>
+                <td>300</td>
+                <td>300</td>
+                <td id="item_count">11</td>
+                <td>34 days 6 h 56 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 215424, 'template_ql': 300}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="73126" cluster_id="215432" template_ql="300">
+                <td class="pcenter"><input type="radio" name="selectedBuyOrder" value="73126" onChange="$('#buyButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="buying_price">1</td>
+                <td>300</td>
+                <td>300</td>
+                <td id="item_count">11</td>
+                <td>34 days 6 h 58 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 215432, 'template_ql': 300}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="73127" cluster_id="215387" template_ql="300">
+                <td class="pcenter"><input type="radio" name="selectedBuyOrder" value="73127" onChange="$('#buyButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="buying_price">1</td>
+                <td>300</td>
+                <td>300</td>
+                <td id="item_count">9</td>
+                <td>34 days 6 h 59 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 215387, 'template_ql': 300}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="73128" cluster_id="215391" template_ql="300">
+                <td class="pcenter"><input type="radio" name="selectedBuyOrder" value="73128" onChange="$('#buyButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="buying_price">1</td>
+                <td>300</td>
+                <td>300</td>
+                <td id="item_count">8</td>
+                <td>34 days 7 h 0 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 215391, 'template_ql': 300}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="73130" cluster_id="215396" template_ql="300">
+                <td class="pcenter"><input type="radio" name="selectedBuyOrder" value="73130" onChange="$('#buyButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="buying_price">1</td>
+                <td>300</td>
+                <td>300</td>
+                <td id="item_count">11</td>
+                <td>34 days 7 h 2 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 215396, 'template_ql': 300}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="73185" cluster_id="208698" template_ql="250">
+                <td class="pcenter"><input type="radio" name="selectedBuyOrder" value="73185" onChange="$('#buyButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="buying_price">1</td>
+                <td>250</td>
+                <td>250</td>
+                <td id="item_count">11</td>
+                <td>34 days 17 h 22 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 208698, 'template_ql': 250}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="73419" cluster_id="169478" template_ql="50">
+                <td class="pcenter"><input type="radio" name="selectedBuyOrder" value="73419" onChange="$('#buyButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="buying_price">1</td>
+                <td>50</td>
+                <td>50</td>
+                <td id="item_count">11</td>
+                <td>36 days 19 h 14 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 169478, 'template_ql': 50}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="73616" cluster_id="214285" template_ql="215">
+                <td class="pcenter"><input type="radio" name="selectedBuyOrder" value="73616" onChange="$('#buyButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="buying_price">1</td>
+                <td>215</td>
+                <td>215</td>
+                <td id="item_count">11</td>
+                <td>37 days 20 h 56 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 214285, 'template_ql': 215}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="74006" cluster_id="43622" template_ql="100">
+                <td class="pcenter"><input type="radio" name="selectedBuyOrder" value="74006" onChange="$('#buyButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="buying_price">1</td>
+                <td>100</td>
+                <td>200</td>
+                <td id="item_count">11</td>
+                <td>41 days 19 h 7 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 43622, 'template_ql': 100}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="74007" cluster_id="169486" template_ql="50">
+                <td class="pcenter"><input type="radio" name="selectedBuyOrder" value="74007" onChange="$('#buyButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="buying_price">1</td>
+                <td>50</td>
+                <td>50</td>
+                <td id="item_count">11</td>
+                <td>41 days 19 h 7 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 169486, 'template_ql': 50}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="74564" cluster_id="193674" template_ql="75">
+                <td class="pcenter"><input type="radio" name="selectedBuyOrder" value="74564" onChange="$('#buyButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="buying_price">1</td>
+                <td>75</td>
+                <td>300</td>
+                <td id="item_count">111</td>
+                <td>48 days 7 h 15 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 193674, 'template_ql': 75}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="74565" cluster_id="193675" template_ql="75">
+                <td class="pcenter"><input type="radio" name="selectedBuyOrder" value="74565" onChange="$('#buyButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="buying_price">1</td>
+                <td>75</td>
+                <td>300</td>
+                <td id="item_count">110</td>
+                <td>48 days 7 h 17 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 193675, 'template_ql': 75}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="75500" cluster_id="192016" template_ql="250">
+                <td class="pcenter"><input type="radio" name="selectedBuyOrder" value="75500" onChange="$('#buyButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="buying_price">1</td>
+                <td>250</td>
+                <td>250</td>
+                <td id="item_count">11</td>
+                <td>11 days 23 h 30 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 192016, 'template_ql': 250}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="75501" cluster_id="191979" template_ql="250">
+                <td class="pcenter"><input type="radio" name="selectedBuyOrder" value="75501" onChange="$('#buyButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="buying_price">1</td>
+                <td>250</td>
+                <td>250</td>
+                <td id="item_count">11</td>
+                <td>11 days 23 h 33 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 191979, 'template_ql': 250}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="75502" cluster_id="194887" template_ql="185">
+                <td class="pcenter"><input type="radio" name="selectedBuyOrder" value="75502" onChange="$('#buyButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="buying_price">15000000</td>
+                <td>185</td>
+                <td>185</td>
+                <td id="item_count">1</td>
+                <td>11 days 23 h 34 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 194887, 'template_ql': 185}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
+              <tr order_id="75560" cluster_id="36311" template_ql="185">
+                <td class="pcenter"><input type="radio" name="selectedBuyOrder" value="75560" onChange="$('#buyButtons').attr('class', 'bottomButtonsActive')" /></td>
+                <td class="pcenter" id="icon_url"><img height="20" width="20" src="/staticLIVE/images/ajax-loader-20.gif"/></td>
+                <td><p id="item_name">Unknown</p></td>
+                <td id="buying_price">10000000</td>
+                <td>185</td>
+                <td>185</td>
+                <td id="item_count">1</td>
+                <td>12 days 14 h 14 min</td>
+                <td class="pcenter"><a href="#" onclick="getPage('popup_itemview','overlay','/marketLIVE/item_view', {'cluster_id': 36311, 'template_ql': 185}, {})"><img height="21" width="21" src="/staticLIVE/images/item_info.png" /></a></td>
+              </tr>
             </tbody>
           </table>
           <div class="bottomButtons" id="buyButtons">
